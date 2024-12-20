@@ -15,7 +15,7 @@ const MusicCard = ({ item }) => {
           height={80}
           className="rounded-md"
         />
-        <div className="flex flex-col justify-center py-4 lg:w-[400px] md:w-[200px] w-[150px] ">
+        <div className="flex flex-col justify-center py-4 xl:w-[350px] lg:w-[190px] md:w-[200px] sm:w-[180px] w-[140px] ">
           <h1 className="text-[15px] font-bold text-gray-300 truncate">
             {item.title}
           </h1>

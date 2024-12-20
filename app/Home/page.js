@@ -1,32 +1,15 @@
+"use client";
 import React from "react";
+import { useContext } from "react";
+import { ProfileBuilderContext } from "../Context/ContextProvider";
 
 const Page = () => {
+  const { context, setcont } = useContext(ProfileBuilderContext);
+  console.log(context);
   return (
-    <div className="h-screen text-black ">
-      this is home page
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste neque
-        fugiat at aliquid soluta atque maxime nemo earum dolorum. Dolore quos
-        maiores, cupiditate odio ab illum officia modi molestiae dolorum!Lorem
-        ipsum dolor sit amet consectetur adipisicing elit. Iste neque fugiat at
-        aliquid soluta atque maxime nemo earum dolorum. Dolore quos maiores,
-        cupiditate odio ab illum officia modi molestiae dolorum! Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Iste neque fugiat at
-        aliquid soluta atque maxime nemo earum dolorum. Dolore quos maiores,
-        cupiditate odio ab illum officia modi molestiae dolorum! Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Iste neque fugiat at
-        aliquid soluta atque maxime nemo earum dolorum. Dolore quos maiores,
-        cupiditate odio ab illum officia modi molestiae dolorum! Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Iste neque fugiat at
-        aliquid soluta atque maxime nemo earum dolorum. Dolore quos maiores,
-        cupiditate odio ab illum officia modi molestiae dolorum! Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Iste neque fugiat at
-        aliquid soluta atque maxime nemo earum dolorum. Dolore quos maiores,
-        cupiditate odio ab illum officia modi molestiae dolorum! Lorem ipsum
-        dolor sit amet consectetur adipisicing elit. Iste neque fugiat at
-        aliquid soluta atque maxime nemo earum dolorum. Dolore quos maiores,
-        cupiditate odio ab illum officia modi molestiae dolorum!
-      </p>
+    <div className="h-screen lg:flex md:flex text-white py-20">
+      <h1>this is context </h1>
+      <button onClick={setcont}>setcontext</button>
     </div>
   );
 };
