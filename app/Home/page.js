@@ -8,12 +8,15 @@ const Page = () => {
   console.log(context);
   const getRequestHandler = async () => {
     try {
-      const response = await fetch("/api/postmodel", {
+      const response = await fetch("/api/addModelCard", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json", // Telling the server we are sending JSON data
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name: "anjali", role: "developer" }),
+        body: JSON.stringify({
+          id: "1",
+          cardData: { title: "anjali", subtitle: "blockchain dev" },
+        }), //if you do not want to send any addional data,
       });
       const data = await response.json();
       console.log(data);
