@@ -66,5 +66,11 @@
     "type": "Tiktok",
     "title": "New Module",
     "visible": "true"
+  },
+  {
+    "id": 6,
+    "type": "BandsInTown",
+    "title": "New Module",
+    "visible": "true"
   }
 ]
