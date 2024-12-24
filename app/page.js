@@ -8,9 +8,11 @@ import MobileSidebar from "@/components/MobileSidebar";
 
 import { useContext, useEffect } from "react";
 import { ProfileBuilderContext } from "./Context/ContextProvider";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const { module, getRequestHandler } = useContext(ProfileBuilderContext);
+  const router = useRouter();
   console.log(module);
   useEffect(() => {
     getRequestHandler();
@@ -56,6 +58,14 @@ export default function Home() {
           </div>
           <div className="lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden bg-[#1d1d1d] fixed right-10 top-30 rounded-lg pt-[180px] overflow-y-auto">
             content
+          </div>
+          <div className="fixed bottom-10 left-[360px] ">
+            <button
+              className="text-black bg-yellow-500 px-5 py-3 rounded-full "
+              onClick={() => router.push("/new")}
+            >
+              Add Content
+            </button>
           </div>
         </div>
       </div>
