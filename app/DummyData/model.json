@@ -6,12 +6,6 @@
     "visible": "true",
     "cards": [
       {
-        "id": "1",
-        "title": "Justin Bieber-Ghost",
-        "subtitle": "https://www.youtube.com/watch?v=ChkdTSokds",
-        "image": "https://api.reju.pro/images/1724320078906-download1.jpeg"
-      },
-      {
         "id": "2",
         "title": "Justin Bieber-Baby ft. Ludacris",
         "subtitle": "https://www.youtube.com/watch?v=ChkdTSodfs",
@@ -22,12 +16,6 @@
         "title": "Justin Bieber-Sorry(PURPOST:The Movement)",
         "subtitle": "https://www.youtube.com/watch?v=ChkdTSokse",
         "image": "https://i.ytimg.com/vi/tQ0yjYUFKAE/sddefault.jpg"
-      },
-      {
-        "id": "4",
-        "title": "Justin Bieber-One Time(Official Music Video)",
-        "subtitle": "https://www.youtube.com/watch?v=ChkdTSolsow",
-        "image": "https://api.reju.pro/images/1724320379505-download4.jpeg"
       }
     ]
   },
@@ -72,11 +60,5 @@
         "image": "https://i.ytimg.com/vi/tQ0yjYUFKAE/sddefault.jpg"
       }
     ]
-  },
-  {
-    "id": 5,
-    "type": "YouTube Video Module",
-    "title": "New Module",
-    "visible": "true"
   }
 ]

@@ -4,8 +4,28 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { RiExpandUpDownLine } from "react-icons/ri";
 import MusicCard from "./MusicCard";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useContext } from "react";
+import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 
 const Column = ({ item, data }) => {
+  const { setmodule } = useContext(ProfileBuilderContext);
+  const deleteColumn = async (id) => {
+    const response = await fetch("/api/deletemodel", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: id }),
+    });
+    const responseData = await response.json();
+    const updatedData = responseData.data;
+    setmodule(updatedData);
+  };
   return (
     <div
       className={`text-white
@@ -17,30 +37,56 @@ const Column = ({ item, data }) => {
         <div className="flex gap-1 ">
           <input
             type="text"
-            placeholder={item.input}
+            placeholder="New Module"
             className="bg-[#1d1d1d] text-[15px] text-white w-[90px] focus:w-[200px] border-b-[1px] border-transparent focus:border-b-[#303031] outline-none  transition-all duration-300 ease-in-out"
           />
 
           <p className="text-[14px] bg-[#303031] rounded-full min-w-[100px] px-4 py-1">
-            {item.title}
+            {item.type}
           </p>
         </div>
         <div className="flex gap-2">
           <MdOutlineRemoveRedEye size={25} />
-          <BsThreeDots size={25} />
+
+          <Popover>
+            <PopoverTrigger>
+              <BsThreeDots size={25} />
+            </PopoverTrigger>
+            <PopoverContent>
+              <button onClick={() => deleteColumn(item.id)}>Delete</button>
+            </PopoverContent>
+          </Popover>
           <RiExpandUpDownLine size={25} />
         </div>
       </div>
       {/* Cards Section */}
       <div className="p-4">
-        <div className="flex gap-2 pt-2 px-3">
-          <CiCirclePlus size={28} className="text-yellow-500 font-bold" />
-          <p className="text-[14px] text-yellow-500 py-[2px]">{item.button}</p>
-        </div>
+        {item.cards && (
+          <div className="flex gap-2 pt-2 px-3">
+            <CiCirclePlus size={28} className="text-yellow-500 font-bold" />
+            <p className="text-[14px] text-yellow-500 py-[2px]">{`Add New ${item.type}`}</p>
+          </div>
+        )}
         <div>
-          {data.map((item) => (
-            <MusicCard item={item} key={item.id} />
-          ))}
+          {item.cards ? (
+            item.cards.map((card) => (
+              <MusicCard item={card} key={card.id} id={item.id} />
+            ))
+          ) : (
+            <div className="flex flex-col justify-center gap-3 text-center">
+              <h1 className="text-xl font-bold ">Nothing Here Yet</h1>
+              <p>Click the button below to get started</p>
+              {!item.cards && (
+                <div className="flex gap-1 pt-2 px-3 justify-center text-center">
+                  <CiCirclePlus
+                    size={28}
+                    className="text-yellow-500 font-bold"
+                  />
+                  <p className="text-[14px] text-yellow-500 py-[2px]">{`Add Music`}</p>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </div>

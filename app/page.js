@@ -1,20 +1,21 @@
 "use client";
 import Column from "@/components/Column";
 import Image from "next/image";
-import { MyMusicData } from "@/app/Data/MyMusicData";
+
 import { IoMdMenu } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import MobileSidebar from "@/components/MobileSidebar";
-import {
-  FirstColumnData,
-  SecondColumnData,
-  ThirdColumnData,
-  FourthColumnData,
-} from "./Data/FirstColumn";
 
-import { OutNowData, DJMixes, YouTube } from "./Data/OutNow";
+import { useContext, useEffect } from "react";
+import { ProfileBuilderContext } from "./Context/ContextProvider";
 
 export default function Home() {
+  const { module, getRequestHandler } = useContext(ProfileBuilderContext);
+  console.log(module);
+  useEffect(() => {
+    getRequestHandler();
+  }, []);
+
   return (
     <div className=" flex-1 bg-black flex flex-col">
       <div className="w-full text-black">
@@ -43,10 +44,13 @@ export default function Home() {
           <div className="md:w-[64%] w-[100%] bg-black text-white">
             <main>
               <div className="flex flex-col gap-8">
-                <Column data={MyMusicData} item={FirstColumnData} />
+                {/* <Column data={MyMusicData} item={FirstColumnData} />
                 <Column data={OutNowData} item={SecondColumnData} />
                 <Column data={DJMixes} item={ThirdColumnData} />
-                <Column data={YouTube} item={FourthColumnData} />
+                <Column data={YouTube} item={FourthColumnData} /> */}
+                {module.map((item) => (
+                  <Column item={item} key={item.id} />
+                ))}
               </div>
             </main>
           </div>

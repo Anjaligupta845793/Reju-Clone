@@ -27,22 +27,10 @@ export const ProfileBuilderProvider = ({ children }) => {
       console.log(error);
     }
   };
-  const creatNewModelHandler = async () => {
-    const response = await fetch("/api/postmodel", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type: "YouTube Video Module",
-        title: "New Module",
-        visible: "true",
-      }),
-    });
-  };
+
   return (
     <ProfileBuilderContext.Provider
-      value={{ context, getRequestHandler, module, creatNewModelHandler }}
+      value={{ context, getRequestHandler, module, setmodule }}
     >
       {children}
     </ProfileBuilderContext.Provider>

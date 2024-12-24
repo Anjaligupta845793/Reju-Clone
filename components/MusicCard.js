@@ -3,8 +3,30 @@ import React from "react";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { RiExpandUpDownLine } from "react-icons/ri";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { useContext } from "react";
+import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 
-const MusicCard = ({ item }) => {
+const MusicCard = ({ item, id }) => {
+  const { setmodule } = useContext(ProfileBuilderContext);
+  const deleteColumnCard = async (id, cardid) => {
+    console.log(`id:- ${id}`);
+    console.log(`cardid-${cardid}`);
+    const response = await fetch("/api/deleteModelCard", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ cardid: cardid, id: id }),
+    });
+    const responseData = await response.json();
+    const updatedData = responseData.data;
+    setmodule(updatedData);
+  };
   return (
     <div className="flex justify-between my-6 rounded-lg  items-center border-[1px]  border-[#303031] ">
       <div className="flex gap-5 ">
@@ -25,7 +47,17 @@ const MusicCard = ({ item }) => {
 
       <div className="flex gap-2 pr-4">
         <MdOutlineRemoveRedEye size={22} />
-        <BsThreeDots size={22} />
+
+        <Popover>
+          <PopoverTrigger>
+            <BsThreeDots size={25} />
+          </PopoverTrigger>
+          <PopoverContent>
+            <button onClick={() => deleteColumnCard(id, item.id)}>
+              Delete
+            </button>
+          </PopoverContent>
+        </Popover>
         <RiExpandUpDownLine size={22} />
       </div>
     </div>
