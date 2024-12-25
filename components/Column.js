@@ -72,7 +72,7 @@ const Column = ({ item, data }) => {
       {/* Cards Section */}
       <div className="p-4">
         <div className="flex gap-2 pt-2 px-3">
-          <Dialog className="md:w-[600px] w-[80px]">
+          <Dialog className="">
             <DialogTrigger>
               <CiCirclePlus size={28} className="text-yellow-500 font-bold" />
             </DialogTrigger>
