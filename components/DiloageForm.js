@@ -3,12 +3,14 @@ import Link from "./DialogBoxes/Link";
 import Tiktok from "./DialogBoxes/Tiktok";
 import YouTube from "./DialogBoxes/YouTube";
 import Form from "./DialogBoxes/Form";
+import Music from "./DialogBoxes/Music";
 
 const componentMap = {
   Link,
   Tiktok,
   YouTube,
   Form,
+  Music,
 };
 
 const DiloageForm = ({ title, id }) => {

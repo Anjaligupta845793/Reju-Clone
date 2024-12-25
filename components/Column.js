@@ -87,9 +87,11 @@ const Column = ({ item, data }) => {
               <MusicCard item={card} key={card.id} id={item.id} />
             ))
           ) : (
-            <div className="flex flex-col justify-center gap-3 text-center">
+            <div className="flex flex-col justify-center gap-3 text-center py-7">
               <h1 className="text-xl font-bold ">Nothing Here Yet</h1>
-              <p>Click the button below to get started</p>
+              <p className="text-gray-400">
+                Click the button below to get started
+              </p>
             </div>
           )}
         </div>
