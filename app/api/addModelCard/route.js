@@ -16,5 +16,6 @@ export async function POST(request) {
   writeFileSync(filePath, JSON.stringify(Data, null, 2));
   return NextResponse.json({
     success: true,
+    data: Data,
   });
 }

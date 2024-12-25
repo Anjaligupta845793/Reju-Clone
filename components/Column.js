@@ -4,6 +4,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { RiExpandUpDownLine } from "react-icons/ri";
 import MusicCard from "./MusicCard";
+import DiloageForm from "./DiloageForm";
 import {
   Popover,
   PopoverContent,
@@ -11,6 +12,14 @@ import {
 } from "@/components/ui/popover";
 import { useContext } from "react";
 import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const Column = ({ item, data }) => {
   const { setmodule } = useContext(ProfileBuilderContext);
@@ -26,6 +35,7 @@ const Column = ({ item, data }) => {
     const updatedData = responseData.data;
     setmodule(updatedData);
   };
+
   return (
     <div
       className={`text-white
@@ -42,7 +52,7 @@ const Column = ({ item, data }) => {
           />
 
           <p className="text-[14px] bg-[#303031] rounded-full min-w-[100px] px-4 py-1">
-            {item.type}
+            {`${item.type}`}
           </p>
         </div>
         <div className="flex gap-2">
@@ -61,12 +71,16 @@ const Column = ({ item, data }) => {
       </div>
       {/* Cards Section */}
       <div className="p-4">
-        {item.cards && (
-          <div className="flex gap-2 pt-2 px-3">
-            <CiCirclePlus size={28} className="text-yellow-500 font-bold" />
-            <p className="text-[14px] text-yellow-500 py-[2px]">{`Add New ${item.type}`}</p>
-          </div>
-        )}
+        <div className="flex gap-2 pt-2 px-3">
+          <Dialog className="md:w-[600px] w-[80px]">
+            <DialogTrigger>
+              <CiCirclePlus size={28} className="text-yellow-500 font-bold" />
+            </DialogTrigger>
+            <DiloageForm title={item.type} id={item.id} />
+          </Dialog>
+          <p className="text-[14px] text-yellow-500 py-[2px]">{`Add New ${item.type}`}</p>
+        </div>
+
         <div>
           {item.cards ? (
             item.cards.map((card) => (
@@ -76,15 +90,6 @@ const Column = ({ item, data }) => {
             <div className="flex flex-col justify-center gap-3 text-center">
               <h1 className="text-xl font-bold ">Nothing Here Yet</h1>
               <p>Click the button below to get started</p>
-              {!item.cards && (
-                <div className="flex gap-1 pt-2 px-3 justify-center text-center">
-                  <CiCirclePlus
-                    size={28}
-                    className="text-yellow-500 font-bold"
-                  />
-                  <p className="text-[14px] text-yellow-500 py-[2px]">{`Add Music`}</p>
-                </div>
-              )}
             </div>
           )}
         </div>

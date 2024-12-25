@@ -1,7 +1,7 @@
 [
   {
     "id": "1",
-    "type": "Link Module",
+    "type": "Link",
     "title": "New Module",
     "visible": "true",
     "cards": [
@@ -21,7 +21,7 @@
   },
   {
     "id": "2",
-    "type": "YouTube Video Module",
+    "type": "YouTube",
     "title": "New Module",
     "visible": "true",
     "cards": [
@@ -30,12 +30,24 @@
         "title": "Justin Bieber-Peaches ft-Danial Caesar",
         "subtitle": "https://www.youtube.com/watch?v=ChkdTSokds",
         "image": "https://i.ytimg.com/vi/tQ0yjYUFKAE/sddefault.jpg"
+      },
+      {
+        "id": 2,
+        "image": "https://img.youtube.com/vi/DuudSp4sHmg/hqdefault.jpg",
+        "title": "Harry Bhai vedio",
+        "subtitle": " https://www.youtube.com/watch?v=DuudSp4sHmg"
+      },
+      {
+        "id": 3,
+        "image": "https://img.youtube.com/vi/SwSbnmqk3zY/hqdefault.jpg",
+        "title": "Harry Bhai vedio",
+        "subtitle": " https://www.youtube.com/watch?v=SwSbnmqk3zY"
       }
     ]
   },
   {
     "id": "3",
-    "type": "Music Module",
+    "type": "Music",
     "title": "New Module",
     "visible": "true",
     "cards": [
@@ -49,7 +61,7 @@
   },
   {
     "id": "4",
-    "type": "YouTube Video Module",
+    "type": "YouTube",
     "title": "New Module",
     "visible": "true",
     "cards": [
@@ -69,7 +81,7 @@
   },
   {
     "id": 6,
-    "type": "BandsInTown",
+    "type": "Data Capture Form",
     "title": "New Module",
     "visible": "true"
   }
