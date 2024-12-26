@@ -9,6 +9,7 @@ import MobileSidebar from "@/components/MobileSidebar";
 import { useContext, useEffect } from "react";
 import { ProfileBuilderContext } from "./Context/ContextProvider";
 import { useRouter } from "next/navigation";
+import Loader from "@/components/Loader";
 
 export default function Home() {
   const { module, getRequestHandler } = useContext(ProfileBuilderContext);
@@ -50,9 +51,13 @@ export default function Home() {
                 <Column data={OutNowData} item={SecondColumnData} />
                 <Column data={DJMixes} item={ThirdColumnData} />
                 <Column data={YouTube} item={FourthColumnData} /> */}
-                {module.map((item) => (
-                  <Column item={item} key={item.id} />
-                ))}
+                {module.length === 0 ? (
+                  <div className="flex justify-center">
+                    <Loader />
+                  </div>
+                ) : (
+                  module.map((item) => <Column item={item} key={item.id} />)
+                )}
               </div>
             </main>
           </div>

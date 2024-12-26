@@ -3,9 +3,11 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "@/components/ui/dialog";
 
 const Link = () => {
@@ -14,7 +16,8 @@ const Link = () => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Add Custom Event</DialogTitle>
-          <DialogDescription className="py-5">
+
+          <div className="">
             <label htmlFor="" className="text-[15px] py-2">
               Event Date
             </label>
@@ -51,17 +54,12 @@ const Link = () => {
                 id=""
                 className="bg-[#1d1d1d] border-[1px] border-[#303031] w-5 h-5 rounded-lg"
               />
-              <p className="text-[15px]">Mark the event as a sold out</p>
-            </div>
-            <div className="flex gap-2 mt-5 justify-end">
-              <DialogTrigger className="px-5 py-3 rounded-full w-[130px]  bg-[#1d1d1d] border-[1px] border-[#303031]">
-                Close
-              </DialogTrigger>
-              <DialogTrigger className="px-5 py-3 text-black w-[130px] rounded-full bg-yellow-500 border-[1px] border-[#303031]">
+              <h1 className="text-[15px]">Mark the event as a sold out</h1>
+              <DialogTrigger className="px-4 py-2 rounded-full text-black bg-yellow-500 my-5 md:ml-[580px]">
                 Done
               </DialogTrigger>
             </div>
-          </DialogDescription>
+          </div>
         </DialogHeader>
       </DialogContent>
     </>

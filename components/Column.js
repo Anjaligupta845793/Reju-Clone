@@ -76,13 +76,13 @@ const Column = ({ item, data }) => {
             <DialogTrigger>
               <CiCirclePlus size={28} className="text-yellow-500 font-bold" />
             </DialogTrigger>
-            <DiloageForm title={item.type} id={item.id} />
+            <DiloageForm title={item.button} id={item.id} />
           </Dialog>
           <p className="text-[14px] text-yellow-500 py-[2px]">{`Add New ${item.type}`}</p>
         </div>
 
         <div>
-          {item.cards ? (
+          {item.cards && item.cards.length > 0 ? (
             item.cards.map((card) => (
               <MusicCard item={card} key={card.id} id={item.id} />
             ))

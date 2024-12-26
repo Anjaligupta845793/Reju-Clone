@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 const page = () => {
   const router = useRouter();
-  const creatNewModelHandler = async (type) => {
+  const creatNewModelHandler = async (type, button) => {
     const response = await fetch("/api/postmodel", {
       method: "POST",
       headers: {
@@ -15,7 +15,9 @@ const page = () => {
       body: JSON.stringify({
         type: type,
         title: "New Module",
+        button: button,
         visible: "true",
+        cards: [],
       }),
     });
     router.push("/");
@@ -23,7 +25,9 @@ const page = () => {
   return (
     <div className="p-10 bg-black text-white h-full">
       <div className="flex gap-2 md:text-xl ">
-        <h1>⇦</h1>
+        <h1 onClick={() => router.push("/")} className="cursor-pointer">
+          ⇦
+        </h1>
         <h1 className="font-semibold">Add Content</h1>
       </div>
       <div className="pt-10">

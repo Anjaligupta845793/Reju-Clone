@@ -23,7 +23,7 @@ const AddContentCard = ({ item, create }) => {
           {item.cards.map((card, index) => (
             <div
               className="bg-gradient-to-r from-black via-[#303031] font-semibold to-black p-4 border-[1px] border-[#303031] rounded-lg"
-              onClick={() => create(card.title)}
+              onClick={() => create(card.title, card.button)}
               key={index}
             >
               <h1 className="text-[15px]">{card.title}</h1>

@@ -75,7 +75,7 @@ const Form = () => {
               </DialogTrigger>
             </div>
           </div>
-          <div className="w-[320px] h-[200px]  top-20 right-12 md:fixed hidden ">
+          <div className="w-[320px] h-[200px] fixed top-20 right-12 md:block hidden ">
             <h1>Content Module</h1>
             <div className="py-6 px-3 bg-black ">
               <div className="bg-[#1d1d1d] p-4 flex">

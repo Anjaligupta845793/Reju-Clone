@@ -40,7 +40,7 @@ const MainLayout = ({ children }) => {
           </div>
         </div>
 
-        <div className="flex-1">
+        <div className="flex-1 bg-black">
           <main>{children}</main>
         </div>
       </div>
