@@ -1,5 +1,5 @@
 import React from "react";
-import Link from "./DialogBoxes/Link";
+import Link from "./DialogBoxes/Events";
 import Tiktok from "./DialogBoxes/Tiktok";
 import YouTube from "./DialogBoxes/YouTube";
 import Form from "./DialogBoxes/Form";

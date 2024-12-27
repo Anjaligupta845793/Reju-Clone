@@ -31,13 +31,15 @@ const page = () => {
         <h1 className="font-semibold">Add Content</h1>
       </div>
       <div className="pt-10">
-        {addcontentdata.map((item, index) => (
-          <AddContentCard
-            item={item}
-            key={index}
-            create={creatNewModelHandler}
-          />
-        ))}
+        {addcontentdata.map((item, index) => {
+          return (
+            <AddContentCard
+              item={item}
+              key={index}
+              create={creatNewModelHandler}
+            />
+          );
+        })}
       </div>
     </div>
   );

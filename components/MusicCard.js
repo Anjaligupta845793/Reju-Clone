@@ -3,6 +3,7 @@ import React from "react";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { RiExpandUpDownLine } from "react-icons/ri";
+import user from "../public/user.jpg";
 import {
   Popover,
   PopoverContent,
@@ -36,6 +37,7 @@ const MusicCard = ({ item, id }) => {
           width={80}
           height={80}
           className="rounded-md"
+          onError={() => setImgSrc(user)}
         />
         <div className="flex flex-col justify-center py-4 xl:w-[350px] lg:w-[190px] md:w-[200px] sm:w-[180px] w-[140px] ">
           <h1 className="text-[15px] font-bold text-gray-300 truncate">

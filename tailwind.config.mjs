@@ -10,6 +10,9 @@ export default {
   ],
   theme: {
     extend: {
+      borderWidth: {
+        0.5: "0.5px",
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

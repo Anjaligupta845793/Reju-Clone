@@ -52,8 +52,12 @@ export default function Home() {
                 <Column data={DJMixes} item={ThirdColumnData} />
                 <Column data={YouTube} item={FourthColumnData} /> */}
                 {module.length === 0 ? (
-                  <div className="flex justify-center">
-                    <Loader />
+                  <div className="flex justify-center max-w-[300px] mx-auto">
+                    {/* <Loader /> */}
+                    <p className="text-2xl font-bold ">
+                      Loading… kind of like how I load up courage to talk to
+                      someone like you. 😏
+                    </p>
                   </div>
                 ) : (
                   module.map((item) => <Column item={item} key={item.id} />)

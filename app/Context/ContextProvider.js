@@ -7,6 +7,22 @@ export const ProfileBuilderContext = createContext();
 export const ProfileBuilderProvider = ({ children }) => {
   const [context, setcontext] = useState("bye from context");
   const [module, setmodule] = useState([]);
+  const [displayNameOrLogo, setdisplayNameOrLogo] = useState(false);
+  const [displayName, setdisplayName] = useState(true);
+  const [displayLogo, setdisplayLogo] = useState(false);
+
+  const toggleDisplayButton = async () => {
+    setdisplayNameOrLogo(!displayNameOrLogo);
+  };
+  const textOnclick = () => {
+    setdisplayName(true);
+    setdisplayLogo(false);
+  };
+  const logoOnClick = () => {
+    setdisplayName(false);
+    setdisplayLogo(true);
+  };
+
   const getRequestHandler = async () => {
     try {
       const response = await fetch("/api/get", {
@@ -30,7 +46,17 @@ export const ProfileBuilderProvider = ({ children }) => {
 
   return (
     <ProfileBuilderContext.Provider
-      value={{ context, getRequestHandler, module, setmodule }}
+      value={{
+        context,
+        getRequestHandler,
+        module,
+        setmodule,
+        displayLogo,
+        displayName,
+        displayNameOrLogo,
+        textOnclick,
+        logoOnClick,
+      }}
     >
       {children}
     </ProfileBuilderContext.Provider>
