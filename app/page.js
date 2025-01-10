@@ -51,7 +51,7 @@ export default function Home() {
                 <Column data={OutNowData} item={SecondColumnData} />
                 <Column data={DJMixes} item={ThirdColumnData} />
                 <Column data={YouTube} item={FourthColumnData} /> */}
-                {module.length === 0 ? (
+                {module && module.length === 0 ? (
                   <div className="flex justify-center max-w-[300px] mx-auto">
                     {/* <Loader /> */}
                     <p className="text-2xl font-bold ">

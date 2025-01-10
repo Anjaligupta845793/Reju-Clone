@@ -10,6 +10,55 @@ export const ProfileBuilderProvider = ({ children }) => {
   const [displayNameOrLogo, setdisplayNameOrLogo] = useState(false);
   const [displayName, setdisplayName] = useState(true);
   const [displayLogo, setdisplayLogo] = useState(false);
+  const [light, setlight] = useState(true);
+  const [dark, setdark] = useState(false);
+  const [custom, setcustom] = useState(false);
+  const [colorTheme, setcolorTheme] = useState({
+    cardColor: "#FFFFFF",
+    backgroundcolor: "#e1e1e1",
+    TyprgraphyAndIconColor: "#121212",
+    ModuleOverlay: "Dark",
+  });
+
+  const [CustomCardtheme, setCustomCardtheme] = useState({
+    cardColor: "#000000",
+    backgroundcolor: "#1d1d1d",
+    TyprgraphyAndIconColor: "#FFFFFF",
+    ModuleOverlay: "Light",
+  });
+
+  const lightThemeHandler = () => {
+    setcolorTheme({
+      cardColor: "#FFFFFF",
+      backgroundcolor: "#e1e1e1",
+      TyprgraphyAndIconColor: "#121212",
+      ModuleOverlay: "Dark",
+    });
+    setlight(true);
+    setdark(false);
+    setcustom(false);
+  };
+
+  const darkThemeHandler = () => {
+    setcolorTheme({
+      cardColor: "#000000",
+      backgroundcolor: "#1d1d1d",
+      TyprgraphyAndIconColor: "#FFFFFF",
+      ModuleOverlay: "Light",
+    });
+    setlight(false);
+    setdark(true);
+    setcustom(false);
+  };
+
+  const customThemeHandler = () => {
+    setlight(false);
+    setdark(false);
+    setcustom(true);
+    setcolorTheme({
+      ...CustomCardtheme,
+    });
+  };
 
   const toggleDisplayButton = async () => {
     setdisplayNameOrLogo(!displayNameOrLogo);
@@ -54,8 +103,16 @@ export const ProfileBuilderProvider = ({ children }) => {
         displayLogo,
         displayName,
         displayNameOrLogo,
+        toggleDisplayButton,
         textOnclick,
         logoOnClick,
+        light,
+        dark,
+        custom,
+        colorTheme,
+        lightThemeHandler,
+        darkThemeHandler,
+        customThemeHandler,
       }}
     >
       {children}

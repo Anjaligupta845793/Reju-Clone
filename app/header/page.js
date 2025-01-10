@@ -5,8 +5,18 @@ import Image from "next/image";
 import React from "react";
 import { IoTextOutline } from "react-icons/io5";
 import { HiPhoto } from "react-icons/hi2";
+import { useContext } from "react";
+import { ProfileBuilderContext } from "../Context/ContextProvider";
 
 const header = () => {
+  const {
+    displayLogo,
+    displayName,
+    displayNameOrLogo,
+    textOnclick,
+    logoOnClick,
+    toggleDisplayButton,
+  } = useContext(ProfileBuilderContext);
   return (
     <div className=" flex-1 bg-black flex flex-col">
       <div className="w-full text-black">
@@ -78,7 +88,7 @@ const header = () => {
               <div className=" border-[1px] rounded-lg p-3 mt-5 border-[#303031]">
                 <div className="flex justify-between">
                   <h1>Display Name or Logo</h1>
-                  <ToggleSwitch />
+                  <ToggleSwitch onClick={toggleDisplayButton} />
                 </div>
                 <p>
                   You can add a display name manually or update a custom logo to
@@ -90,6 +100,7 @@ const header = () => {
                     <IoTextOutline
                       size={50}
                       className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2"
+                      onClick={textOnclick}
                     />
                   </div>
                   <div>
@@ -97,12 +108,17 @@ const header = () => {
                     <HiPhoto
                       size={50}
                       className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2"
+                      onClick={logoOnClick}
                     />
                   </div>
                 </div>
               </div>
-              {/* Text and Logo SEction */}
-              <div className=" border-[1px] rounded-lg p-3 mt-5 border-[#303031]">
+              {/* Text Section  */}
+              <div
+                className={`border-[1px] rounded-lg p-3 mt-5 border-[#303031] ${
+                  displayName ? "block" : "hidden"
+                }`}
+              >
                 <h1>Text</h1>
                 <p className="mt-7">
                   Type your display name into the field below
@@ -113,7 +129,11 @@ const header = () => {
                 />
               </div>
               {/* Logo Section */}
-              <div className=" border-[1px] rounded-lg p-3 mt-5 border-[#303031]">
+              <div
+                className={`border-[1px] rounded-lg p-3 mt-5 border-[#303031] ${
+                  displayLogo ? "block" : "hidden"
+                }`}
+              >
                 <h1>Logo</h1>
                 <p className="mt-7">
                   Replace your display name with a custom logo.
