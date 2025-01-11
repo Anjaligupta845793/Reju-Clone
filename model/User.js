@@ -38,15 +38,15 @@ const UserSchema = new mongoose.Schema(
       },
     },
     displayNameOrLogo: {
-      type: bool,
+      type: Boolean,
       default: false,
     },
     displayName: {
-      type: bool,
+      type: Boolean,
       default: true,
     },
     displayLogo: {
-      type: bool,
+      type: Boolean,
       default: false,
     },
     displayLogoImage: {
@@ -66,7 +66,7 @@ const UserSchema = new mongoose.Schema(
       cardColor: String,
       backgroundColor: String,
       TypographyandIconColor: String,
-      isImageBackground: bool,
+      isImageBackground: Boolean,
       moduleOverlay: String,
     },
     socialLinks: [

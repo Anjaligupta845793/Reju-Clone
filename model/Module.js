@@ -19,7 +19,7 @@ const ModuleSchema = new mongoose.Schema({
   },
   name: String,
   FormType: String,
-  visible: bool,
+  visible: Boolean,
 
   items: [{ type: [mongoose.Schema.Types.Mixed], default: [] }],
 });
@@ -46,6 +46,10 @@ const MediaGallaryModule = new mongoose.Schema({
     type: String,
     required: true,
   },
+  visible: {
+    type: Boolean,
+    default: true,
+  },
 });
 export const MediaGallary =
   mongoose.models.MediaGallary ||
@@ -55,6 +59,10 @@ const YouTubeTiktokModule = new mongoose.Schema({
   link: {
     type: String,
     required: true,
+  },
+  visible: {
+    type: Boolean,
+    default: true,
   },
 });
 export const YouTubeTiktok =
@@ -80,6 +88,10 @@ const ExternalLinkModule = new mongoose.Schema({
     type: String,
     required: true,
   },
+  visible: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 export const ExternalLink =
@@ -90,6 +102,10 @@ const EventModule = new mongoose.Schema({
   EventDate: {
     type: String,
     required: true,
+  },
+  visible: {
+    type: Boolean,
+    default: true,
   },
   VenueName: {
     type: String,
@@ -112,6 +128,10 @@ const ProductModule = new mongoose.Schema({
     id: {
       type: String,
       required: true,
+    },
+    visible: {
+      type: Boolean,
+      default: true,
     },
     url: {
       type: String,
@@ -145,6 +165,10 @@ const FormModule = new mongoose.Schema({
       type: String,
       required: true,
     },
+    visible: {
+      type: Boolean,
+      default: true,
+    },
     id: {
       type: String,
       required: true,
@@ -165,6 +189,10 @@ const ThroneWishlistOrBandInTownModule = new mongoose.Schema({
   url: {
     type: String,
     required: true,
+  },
+  visible: {
+    type: Boolean,
+    default: true,
   },
 });
 export const ThroneWishlistOrBandInTown =

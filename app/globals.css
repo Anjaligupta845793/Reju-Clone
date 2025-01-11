@@ -86,3 +86,13 @@ body {
     @apply bg-background text-foreground;
   }
 }
+@keyframes slideInLeft {
+  from {
+    transform: translateX(150%); /* Start off-screen from the left */
+    opacity: 0; /* Fully transparent */
+  }
+  to {
+    transform: translateX(0); /* End in its final position */
+    opacity: 1; /* Fully visible */
+  }
+}
