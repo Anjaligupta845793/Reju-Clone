@@ -4,7 +4,6 @@ const UserSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
@@ -83,6 +82,9 @@ const UserSchema = new mongoose.Schema(
       status: String,
       plan: String,
       amount: Number,
+    },
+    modules: {
+      type: mongoose.Schema.Types.ObjectId,
     },
   },
   { timestamps: true }

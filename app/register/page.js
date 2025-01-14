@@ -3,8 +3,10 @@ import Image from "next/image";
 import React from "react";
 import { AuthData } from "../Context/AuthProvider";
 import SignUpForm from "@/components/SignUpForm";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
+  const router = useRouter();
   return (
     <div className="text-white grid xl:grid-cols-2 grid-cols-1">
       {/* Left Side */}
@@ -32,7 +34,7 @@ const Register = () => {
       <div className="w-full px-6 py-12 md:px-20  xl:px-40 border-l-[1px] border-[#302030]">
         <p className="mt-20">Start for free</p>
         <h1 className="font-bold text-2xl mt-4">Sign Up to Reju</h1>
-        <SignUpForm />
+        <SignUpForm router={router} />
       </div>
     </div>
   );

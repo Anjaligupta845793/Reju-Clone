@@ -1,17 +1,9 @@
 "use client";
-import { addcontentdata } from "@/app/Data/addcontent";
+
 import React from "react";
 
-import { useRouter } from "next/navigation";
 import Throne from "./DialogBoxes/Throne";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 const AddContentCard = ({ item, create }) => {
   return (
@@ -33,7 +25,6 @@ const AddContentCard = ({ item, create }) => {
                     <DialogTrigger>
                       <div className=" flex gap-4" key={index}>
                         {" "}
-                        <card.icon size={28} />
                         <div>
                           <h1 className="text-[15px] text-left">
                             {card.title}
@@ -54,7 +45,6 @@ const AddContentCard = ({ item, create }) => {
                   key={index}
                 >
                   {" "}
-                  <card.icon size={28} />
                   <div>
                     <h1 className="text-[15px]">{card.title}</h1>
                     <p className="text-[13px]">{card.subtitle}</p>

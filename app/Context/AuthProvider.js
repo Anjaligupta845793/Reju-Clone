@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const Login = async (email, password) => {
+  const Login = async (email, password, router) => {
     setloading(true);
     try {
       const login = await axios.post("/api/login", {
@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }) => {
       setloading(false);
       toast.success("logged in successfully!");
       setisAuth(true);
+      router.push("/");
     } catch (error) {
       console.log("error while calling Login ", error);
       setloading(false);

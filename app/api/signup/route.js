@@ -31,7 +31,7 @@ export async function POST(request) {
       password: hashedpassword,
     });
 
-    const token = generateJwt(user._id);
+    const token = await generateJwt(user._id);
 
     const response = NextResponse.json(
       { message: "user Created successfully", user: user },

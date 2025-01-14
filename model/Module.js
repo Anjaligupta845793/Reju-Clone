@@ -17,7 +17,14 @@ const ModuleSchema = new mongoose.Schema({
       "Data Capture Form",
     ],
   },
-  name: String,
+  name: {
+    type: String,
+    default: "New Module",
+  },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+  },
   FormType: String,
   visible: Boolean,
 

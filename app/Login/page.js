@@ -6,14 +6,16 @@ import { useState } from "react";
 import Loader from "@/components/Loader";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { loading, Login } = AuthData();
+  const router = useRouter();
   const handleSubmit = (e) => {
     e.preventDefault();
-    Login(email, password);
+    Login(email, password, router);
   };
 
   return (

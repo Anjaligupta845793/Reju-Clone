@@ -11,8 +11,7 @@ export async function GET(request) {
     } catch (error) {
       console.log(error);
     }
-    const user = new User({ username:"anjali" , email:"sajal@gmail.com"}); 
-    user.save();
+
     const filePath = path.join(process.cwd(), "app", "DummyData", "model.json");
     const data = readFileSync(filePath, "utf-8");
     const result = JSON.parse(data);
