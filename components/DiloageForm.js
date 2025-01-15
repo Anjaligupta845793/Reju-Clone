@@ -14,7 +14,8 @@ const componentMap = {
 };
 
 const DiloageForm = ({ title, id }) => {
-  const Component = title == "Music" ? Link : componentMap[title]; // Dynamically get the component
+  const Component =
+    title == "Music" || title == "Gallary" ? Link : componentMap[title]; // Dynamically get the component
 
   if (!Component) {
     return <div>Component not found: {title}</div>; // Handle invalid titles

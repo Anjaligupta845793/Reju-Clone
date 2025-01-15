@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { createContext, useState } from "react";
-
+import { toast } from "react-hot-toast";
 export const ProfileBuilderContext = createContext();
 
 export const ProfileBuilderProvider = ({ children }) => {
@@ -96,8 +96,10 @@ export const ProfileBuilderProvider = ({ children }) => {
     try {
       const data = await axios.post("/api/upload-image", formdata);
       console.log(data);
-      console.log(image);
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
   };
 
   return (

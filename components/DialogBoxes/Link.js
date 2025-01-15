@@ -1,24 +1,23 @@
 import React, { useState } from "react";
 import {
-  Dialog,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog";
 import FileInput from "../FileInput";
 import axios from "axios";
 
-const Link = () => {
+const Link = ({ id }) => {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [image, setimage] = useState("");
 
   const formdata = new FormData();
   formdata.append("image", image);
+  formdata.append("url", url);
+  formdata.append("title", title);
+  formdata.append("id", "6787a50132ee0eedf4dcd284");
 
   const onchangeHandler = (e) => {
     setimage(e.target.files[0]);
@@ -26,7 +25,7 @@ const Link = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = await axios.post("/api/upload-image", formdata);
+    const data = await axios.post("/api/modules/additems/addLink", formdata);
     console.log(data);
     console.log(image);
   };
