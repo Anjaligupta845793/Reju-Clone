@@ -92,6 +92,13 @@ export const ProfileBuilderProvider = ({ children }) => {
       console.log(error);
     }
   };
+  const postLinkItemHandler = async () => {
+    try {
+      const data = await axios.post("/api/upload-image", formdata);
+      console.log(data);
+      console.log(image);
+    } catch (error) {}
+  };
 
   return (
     <ProfileBuilderContext.Provider

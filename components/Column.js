@@ -12,14 +12,7 @@ import {
 } from "@/components/ui/popover";
 import { useContext } from "react";
 import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 const Column = ({ item, data }) => {
   const { setmodule } = useContext(ProfileBuilderContext);
