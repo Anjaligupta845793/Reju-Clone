@@ -107,5 +107,21 @@
         "image": "https://i.ytimg.com/vi/tQ0yjYUFKAE/sddefault.jpg"
       }
     ]
+  },
+  {
+    "id": "7",
+    "type": "Custom Product",
+    "title": "New Module",
+    "button": "Product",
+    "visible": "true",
+    "cards": []
+  },
+  {
+    "id": "8",
+    "type": "Custom Events",
+    "title": "New Module",
+    "button": "Events",
+    "visible": "true",
+    "cards": []
   }
 ]

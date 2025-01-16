@@ -4,6 +4,8 @@ import Tiktok from "./DialogBoxes/Tiktok";
 import YouTube from "./DialogBoxes/YouTube";
 import Form from "./DialogBoxes/Form";
 import Music from "./DialogBoxes/Music";
+import Product from "./DialogBoxes/Product";
+import Events from "./DialogBoxes/Events";
 
 const componentMap = {
   Link,
@@ -11,6 +13,8 @@ const componentMap = {
   YouTube,
   Form,
   Music,
+  Product,
+  Events,
 };
 
 const DiloageForm = ({ title, id }) => {

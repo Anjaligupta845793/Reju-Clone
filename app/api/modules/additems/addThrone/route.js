@@ -8,11 +8,16 @@ export async function POST(request) {
 
   try {
     // Get form data
-    const formdata = await request.formData();
-    const image = formdata.get("image");
-    const title = formdata.get("title");
-    const url = formdata.get("url");
-    const id = formdata.get("id");
+    const { title, url, imageurl, id } = await request.json();
+    console.log({ title, url, imageurl, id });
+    if (!title || !url || !imageurl) {
+      return NextResponse.json(
+        {
+          message: "please provide all fields",
+        },
+        { status: 400 }
+      );
+    }
 
     // Check if module exists
     const module = await Module.findById(id);
@@ -24,21 +29,11 @@ export async function POST(request) {
     }
 
     // Upload image
-    let imageData;
-    try {
-      imageData = await uploadImage(image, "module");
-    } catch (uploadError) {
-      return NextResponse.json(
-        { message: "File upload failed", module },
-        { status: 500 }
-      );
-    }
 
     // Prepare item data
     const itemData = {
       image: {
-        url: imageData.secure_url,
-        id: imageData.public_id,
+        url: imageurl,
       },
       url: url,
       title: title,
@@ -48,7 +43,7 @@ export async function POST(request) {
     await module.save();
 
     return NextResponse.json(
-      { message: "Uploaded successfully" },
+      { message: "Uploaded successfully", module },
       { status: 200 }
     );
   } catch (error) {

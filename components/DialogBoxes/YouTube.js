@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -12,40 +11,32 @@ import { useContext } from "react";
 import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 
 import React from "react";
+import axios from "axios";
 
-const YouTube = ({ id }) => {
+const YouTube = () => {
   const { setmodule, module } = useContext(ProfileBuilderContext);
   const [url, seturl] = useState("");
-  const [thumbnailURL, setthumbnailURL] = useState("");
-  function getYouTubeVideoID(url) {
+  /* const [thumbnailURL, setthumbnailURL] = useState(""); */
+  /*  function getYouTubeVideoID(url) {
     const regex =
       /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
     const match = url.match(regex);
     return match ? match[1] : null;
-  }
+  } */
   const fetchUrlImage = async () => {
-    console.log(url);
+    /* console.log(url);
     const vedioId = getYouTubeVideoID(url);
     console.log(vedioId);
     const thumbnailURL = `https://img.youtube.com/vi/${vedioId}/hqdefault.jpg`;
 
-    setthumbnailURL(thumbnailURL);
-    const response = await fetch("/api/addModelCard", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        id: id,
-        cardData: {
-          image: thumbnailURL,
-          title: "Harry Bhai vedio",
-          subtitle: url,
-        },
-      }),
+    setthumbnailURL(thumbnailURL); */
+    const id = "678887f6b1af7728f9325f64";
+    const response = await axios.post("/api/modules/additems/addVideo", {
+      id,
+      url,
     });
-    const data = await response.json();
-    setmodule(data.data);
+    console.log(response);
+    /* setmodule(data.data); */
     seturl("");
   };
   return (
