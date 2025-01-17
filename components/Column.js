@@ -15,18 +15,9 @@ import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 const Column = ({ item, data }) => {
-  const { setmodule } = useContext(ProfileBuilderContext);
+  const { moduleDeleteHandler } = useContext(ProfileBuilderContext);
   const deleteColumn = async (id) => {
-    const response = await fetch("/api/deletemodel", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: id }),
-    });
-    const responseData = await response.json();
-    const updatedData = responseData.data;
-    setmodule(updatedData);
+    moduleDeleteHandler(id);
   };
 
   return (
@@ -81,6 +72,7 @@ const Column = ({ item, data }) => {
                 item={card}
                 key={index}
                 id={item._id}
+                itemid={card._id}
                 type={item.type}
               />
             ))

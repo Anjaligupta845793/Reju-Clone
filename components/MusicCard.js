@@ -3,7 +3,7 @@ import React from "react";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { RiExpandUpDownLine } from "react-icons/ri";
-import user from "../public/user.jpg";
+
 import {
   Popover,
   PopoverContent,
@@ -14,21 +14,10 @@ import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 import MusicCardProduct from "./MusicCardProduct";
 import MusicCardVideo from "./MusicCardVideo";
 
-const MusicCard = ({ item, type, id }) => {
-  const { setmodule } = useContext(ProfileBuilderContext);
-  const deleteColumnCard = async (id, cardid) => {
-    console.log(`id:- ${id}`);
-    console.log(`cardid-${cardid}`);
-    const response = await fetch("/api/deleteModelCard", {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ cardid: cardid, id: id }),
-    });
-    const responseData = await response.json();
-    const updatedData = responseData.data;
-    setmodule(updatedData);
+const MusicCard = ({ item, type, id, itemid }) => {
+  const { itemDeleteHandler } = useContext(ProfileBuilderContext);
+  const deleteColumnCard = async () => {
+    itemDeleteHandler(id, itemid);
   };
   return (
     <div className="flex justify-between my-6 rounded-lg  items-center border-[1px]  border-[#303031] ">
@@ -67,9 +56,7 @@ const MusicCard = ({ item, type, id }) => {
             <BsThreeDots size={25} />
           </PopoverTrigger>
           <PopoverContent>
-            <button /* onClick={() => deleteColumnCard(id, item.id)} */>
-              Delete
-            </button>
+            <button onClick={() => deleteColumnCard()}>Delete</button>
           </PopoverContent>
         </Popover>
         <RiExpandUpDownLine size={22} />

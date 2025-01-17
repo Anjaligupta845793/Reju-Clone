@@ -1,37 +1,39 @@
-import {
-  MediaGallary,
-  YouTubeTiktok,
-  ExternalLink,
-  Event,
-  Product,
-  Form,
-  ThroneWishlistOrBandInTown,
-} from "@/model/Module";
+import { Module } from "@/model/Module";
 import connectDb from "@/utills/mongodb";
-const typeSchemaMap = {
-  "Media Gallery": MediaGallary,
-  Youtube: YouTubeTiktok,
-  Tiktok: YouTubeTiktok,
-  "External Link": ExternalLink,
-  "Custom Event": Event,
-  "Custom Product": Product,
-  "Data Capture Form": Form,
-  "Throne Wishlist": ThroneWishlistOrBandInTown,
-  BandsInTown: ThroneWishlistOrBandInTown,
-};
+import mongoose from "mongoose";
 export async function POST(request) {
   try {
     await connectDb();
-    const { moduleId, itemData, type } = await request.json();
-    const SchemaModel = typeSchemaMap[type];
-    console.log(SchemaModel);
-    NextResponse.json(
-      {
-        message: "Items added successfully",
-        SchemaModel,
-      },
-      { status: 201 }
-    );
+    const { id,url } = await request.json();
+    
+    
+    
+    if (!id || !url ) {
+      return NextResponse.json(
+        {
+          message: "please provide all fields",
+        },
+        { status: 400 }
+      );
+    }
+
+    // Check if module exists
+    const module = await Module.findById(id);
+    if (!module) {
+      return NextResponse.json(
+        { message: "This module doesn't exist", module },
+        { status: 404 }
+      );
+    }
+    const itemData = {
+      _id: new mongoose.Types.ObjectId(),
+      
+      url: url,
+      
+    };
+
+    module.items.push(itemData);
+    await module.save();
   } catch (error) {
     console.log("got the error while adding items in module", error);
     NextResponse.json(

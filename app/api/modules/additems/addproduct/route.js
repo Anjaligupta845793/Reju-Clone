@@ -2,6 +2,7 @@ import connectDb from "@/utills/mongodb";
 import { NextResponse } from "next/server";
 import { Module } from "@/model/Module";
 import { uploadImage } from "@/utills/uploadToCloudinary";
+import mongoose from "mongoose";
 
 export async function POST(request) {
   await connectDb();
@@ -30,6 +31,7 @@ export async function POST(request) {
 
     // Prepare item data
     const itemData = {
+      _id: new mongoose.Types.ObjectId(),
       image: {
         url: imageData.secure_url,
         id: imageData.public_id,

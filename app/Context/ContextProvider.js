@@ -226,6 +226,43 @@ export const ProfileBuilderProvider = ({ children }) => {
     }
   };
 
+  const moduleDeleteHandler = async (id) => {
+    try {
+      const response = await axios.delete(`/api/modules/${id}`);
+
+      setmodule((prevmodule) => prevmodule.filter((mod) => mod._id !== id));
+
+      toast.success("module deleted successfully!");
+    } catch (error) {
+      console.log("Error removing model:", error);
+
+      toast.error("Something went wrong, try again later.");
+    }
+  };
+
+  const itemDeleteHandler = async (moduleid, itemid) => {
+    try {
+      const response = await axios.delete(`/api/modules/${moduleid}/${itemid}`);
+
+      setmodule((prevModules) =>
+        prevModules.map((mod) =>
+          mod._id === moduleid
+            ? {
+                ...mod,
+                items: mod.items.filter((item) => item._id !== itemid),
+              }
+            : mod
+        )
+      );
+
+      toast.success("item deleted successfully!");
+    } catch (error) {
+      console.log("Error removing model:", error);
+
+      toast.error("Something went wrong, try again later.");
+    }
+  };
+
   return (
     <ProfileBuilderContext.Provider
       value={{
@@ -251,7 +288,9 @@ export const ProfileBuilderProvider = ({ children }) => {
         AddProductItemHandler,
         AddThroneItemHandler,
         AddYouTubeItemHandler,
+        moduleDeleteHandler,
         formBtnloading,
+        itemDeleteHandler,
       }}
     >
       {children}
