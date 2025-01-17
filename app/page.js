@@ -2,14 +2,9 @@
 import Column from "@/components/Column";
 import Image from "next/image";
 
-import { IoMdMenu } from "react-icons/io";
-import { FaChevronDown } from "react-icons/fa";
-import MobileSidebar from "@/components/MobileSidebar";
-
 import { useContext, useEffect } from "react";
 import { ProfileBuilderContext } from "./Context/ContextProvider";
 import { useRouter } from "next/navigation";
-import Loader from "@/components/Loader";
 
 export default function Home() {
   const { module, getRequestHandler } = useContext(ProfileBuilderContext);
@@ -47,20 +42,22 @@ export default function Home() {
           <div className="md:w-[64%] w-[100%] bg-black text-white">
             <main>
               <div className="flex flex-col gap-8">
-                {/* <Column data={MyMusicData} item={FirstColumnData} />
-                <Column data={OutNowData} item={SecondColumnData} />
-                <Column data={DJMixes} item={ThirdColumnData} />
-                <Column data={YouTube} item={FourthColumnData} /> */}
-                {module && module.length === 0 ? (
+                {!module ? (
                   <div className="flex justify-center max-w-[300px] mx-auto">
                     {/* <Loader /> */}
-                    <p className="text-2xl font-bold ">
+                    <p className="text-2xl font-bold">
                       Loading… kind of like how I load up courage to talk to
                       someone like you. 😏
                     </p>
                   </div>
+                ) : module.length === 0 ? (
+                  <div className="flex justify-center max-w-[300px] mx-auto">
+                    <p className="text-2xl font-bold">No modules yet. 🚀</p>
+                  </div>
                 ) : (
-                  module.map((item) => <Column item={item} key={item.id} />)
+                  module.map((item, index) => (
+                    <Column item={item} key={index} />
+                  ))
                 )}
               </div>
             </main>

@@ -48,7 +48,7 @@ export async function POST(request) {
     await module.save();
 
     return NextResponse.json(
-      { message: "Uploaded successfully" },
+      { message: "Uploaded successfully", module },
       { status: 200 }
     );
   } catch (error) {

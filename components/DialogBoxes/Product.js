@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   DialogContent,
   DialogHeader,
@@ -14,12 +14,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
+import Loader from "../Loader";
 
 const Product = ({ id }) => {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [image, setimage] = useState("");
   const [price, setPrice] = useState("");
+  const { AddProductItemHandler, formBtnloading } = useContext(
+    ProfileBuilderContext
+  );
   const [selectedCurrency, setSelectedCurrency] = useState(""); // Initialize state
 
   const formdata = new FormData();
@@ -28,7 +33,7 @@ const Product = ({ id }) => {
   formdata.append("title", title);
   formdata.append("price", price);
   formdata.append("currency", selectedCurrency);
-  formdata.append("id", "6788a266b634419321fdfee1");
+  formdata.append("id", id);
 
   const onchangeHandler = (e) => {
     setimage(e.target.files[0]);
@@ -36,19 +41,18 @@ const Product = ({ id }) => {
 
   const handleChange = (value) => {
     setSelectedCurrency(value);
+
     console.log("Selected currency:", value); // For debugging
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = await axios.post("/api/modules/additems/addproduct", formdata);
-    console.log("formdata", {
-      image,
-      url,
-      price,
-      selectedCurrency,
-    });
-    console.log(data);
+    AddProductItemHandler(formdata, id);
+    setTitle("");
+    setPrice("");
+    setUrl("");
+    setSelectedCurrency("");
+    setimage("");
   };
 
   return (
@@ -59,7 +63,7 @@ const Product = ({ id }) => {
 
           <form onSubmit={handleSubmit} className="flex flex-col p-5">
             <div className="flex justify-center flex-col text-center">
-              <FileInput image={image} onchange={onchangeHandler} />
+              <FileInput image={image} onchange={onchangeHandler} required />
               <h1 className="mt-6">Thumbnail Photo</h1>
               <p className="text-[14px]">
                 Use a size that’s at least 369 x 369 pixels and 6MB or less
@@ -76,6 +80,7 @@ const Product = ({ id }) => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="p-2 rounded bg-[#1d1d1d] text-gray-400 text-[15px] border-[1px] border-[#303031] w-full mb-[10px]"
+              required
             />
 
             <label htmlFor="url" className="text-[15px] py-2">
@@ -88,6 +93,7 @@ const Product = ({ id }) => {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               className="p-2 rounded bg-[#1d1d1d] text-gray-400 text-[15px] border-[1px] border-[#303031] w-full mb-[10px]"
+              required
             />
             <div className="grid md:grid-cols-2 grid-cols-1 gap-6">
               <div>
@@ -125,6 +131,7 @@ const Product = ({ id }) => {
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   className="p-2 rounded bg-[#1d1d1d] text-gray-400 text-[15px] border-[1px] border-[#303031] w-full mb-[30px]"
+                  required
                 />
               </div>
             </div>
@@ -134,7 +141,7 @@ const Product = ({ id }) => {
                 type="submit"
                 className="px-4 py-2 rounded-full text-black bg-yellow-500 "
               >
-                Done
+                {formBtnloading ? <Loader /> : " Done"}
               </button>
               <DialogClose asChild>
                 <button

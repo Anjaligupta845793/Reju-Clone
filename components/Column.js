@@ -56,7 +56,7 @@ const Column = ({ item, data }) => {
               <BsThreeDots size={25} />
             </PopoverTrigger>
             <PopoverContent>
-              <button onClick={() => deleteColumn(item.id)}>Delete</button>
+              <button onClick={() => deleteColumn(item._id)}>Delete</button>
             </PopoverContent>
           </Popover>
           <RiExpandUpDownLine size={25} />
@@ -69,15 +69,20 @@ const Column = ({ item, data }) => {
             <DialogTrigger>
               <CiCirclePlus size={28} className="text-yellow-500 font-bold" />
             </DialogTrigger>
-            <DiloageForm title={item.button} id={item.id} />
+            <DiloageForm title={item.FormType} id={item._id} />
           </Dialog>
           <p className="text-[14px] text-yellow-500 py-[2px]">{`Add New ${item.type}`}</p>
         </div>
 
         <div>
-          {item.cards && item.cards.length > 0 ? (
-            item.cards.map((card) => (
-              <MusicCard item={card} key={card.id} id={item.id} />
+          {item.items && item.items.length > 0 ? (
+            item.items.map((card, index) => (
+              <MusicCard
+                item={card}
+                key={index}
+                id={item._id}
+                type={item.type}
+              />
             ))
           ) : (
             <div className="flex flex-col justify-center gap-3 text-center py-7">

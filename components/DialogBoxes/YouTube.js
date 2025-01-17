@@ -11,32 +11,18 @@ import { useContext } from "react";
 import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 
 import React from "react";
-import axios from "axios";
 
-const YouTube = () => {
-  const { setmodule, module } = useContext(ProfileBuilderContext);
+import Loader from "../Loader";
+
+const YouTube = ({ id }) => {
+  const { AddYouTubeItemHandler, formBtnloading } = useContext(
+    ProfileBuilderContext
+  );
   const [url, seturl] = useState("");
-  /* const [thumbnailURL, setthumbnailURL] = useState(""); */
-  /*  function getYouTubeVideoID(url) {
-    const regex =
-      /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|\S*?[?&]v=)|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
-    const match = url.match(regex);
-    return match ? match[1] : null;
-  } */
-  const fetchUrlImage = async () => {
-    /* console.log(url);
-    const vedioId = getYouTubeVideoID(url);
-    console.log(vedioId);
-    const thumbnailURL = `https://img.youtube.com/vi/${vedioId}/hqdefault.jpg`;
 
-    setthumbnailURL(thumbnailURL); */
-    const id = "678887f6b1af7728f9325f64";
-    const response = await axios.post("/api/modules/additems/addVideo", {
-      id,
-      url,
-    });
-    console.log(response);
-    /* setmodule(data.data); */
+  const fetchUrlImage = async () => {
+    AddYouTubeItemHandler(id, url);
+
     seturl("");
   };
   return (
@@ -56,12 +42,13 @@ const YouTube = () => {
               onChange={(e) => seturl(e.target.value)}
               placeholder="https://example.com"
               className="rounded-lg p-2 bg-[#1d1d1d] border-1 border-[#303031] w-full"
+              required
             />
             <DialogTrigger
               className="bg-yellow-500 px-5 py-2 rounded-full text-black mt-4  "
               onClick={fetchUrlImage}
             >
-              Done
+              {formBtnloading ? <Loader /> : "Done"}
             </DialogTrigger>
           </div>
         </DialogHeader>

@@ -8,7 +8,7 @@ export async function POST(request) {
     const module = await Module.findById(id);
     if (!module) {
       return NextResponse.json(
-        { message: "This module doesn't exist" },
+        { message: "This module doesn't exist", module },
         { status: 404 }
       );
     }
@@ -19,6 +19,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         message: "Added successfully",
+        module,
       },
       { status: 201 }
     );

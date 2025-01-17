@@ -11,8 +11,10 @@ import {
 } from "@/components/ui/popover";
 import { useContext } from "react";
 import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
+import MusicCardProduct from "./MusicCardProduct";
+import MusicCardVideo from "./MusicCardVideo";
 
-const MusicCard = ({ item, id }) => {
+const MusicCard = ({ item, type, id }) => {
   const { setmodule } = useContext(ProfileBuilderContext);
   const deleteColumnCard = async (id, cardid) => {
     console.log(`id:- ${id}`);
@@ -30,22 +32,32 @@ const MusicCard = ({ item, id }) => {
   };
   return (
     <div className="flex justify-between my-6 rounded-lg  items-center border-[1px]  border-[#303031] ">
-      <div className="flex gap-5 ">
-        <Image
-          src={item.image}
-          alt="image"
-          width={80}
-          height={80}
-          className="rounded-md"
-          onError={() => setImgSrc(user)}
-        />
-        <div className="flex flex-col justify-center py-4 xl:w-[350px] lg:w-[190px] md:w-[200px] sm:w-[180px] w-[140px] ">
-          <h1 className="text-[15px] font-bold text-gray-300 truncate">
-            {item.title}
-          </h1>
-          <p className="text-[13px] text-gray-400 truncate">{item.subtitle}</p>
+      {type === "Custom Product" ? (
+        <MusicCardProduct item={item} />
+      ) : type === "Youtube" || type === "Tiktok" ? (
+        <MusicCardVideo item={item} />
+      ) : (
+        <div className="flex gap-5">
+          <div className="w-[80px] h-[80px] rounded-md overflow-hidden relative">
+            <Image
+              src={
+                item.image?.url ||
+                "https://img.youtube.com/vi/3_L5mpF2bpM/hqdefault.jpg"
+              }
+              alt="image"
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
+
+          <div className="flex flex-col justify-center py-4 xl:w-[350px] lg:w-[190px] md:w-[200px] sm:w-[180px] w-[140px]">
+            <h1 className="text-[15px] font-bold text-gray-300 truncate">
+              {item.title}
+            </h1>
+            <p className="text-[13px] text-gray-400 truncate">{item.url}</p>
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="flex gap-2 pr-4">
         <MdOutlineRemoveRedEye size={22} />
@@ -55,7 +67,7 @@ const MusicCard = ({ item, id }) => {
             <BsThreeDots size={25} />
           </PopoverTrigger>
           <PopoverContent>
-            <button onClick={() => deleteColumnCard(id, item.id)}>
+            <button /* onClick={() => deleteColumnCard(id, item.id)} */>
               Delete
             </button>
           </PopoverContent>

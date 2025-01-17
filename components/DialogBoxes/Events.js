@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 import {
   DialogContent,
   DialogHeader,
@@ -6,15 +7,18 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { useState } from "react";
+import Loader from "../Loader";
+import { toast } from "react-hot-toast";
 
-import axios from "axios";
-
-const Events = () => {
+const Events = ({ id }) => {
+  const { AddEventItemHandler, formBtnloading } = useContext(
+    ProfileBuilderContext
+  );
   const [date, setdate] = useState("");
   const [vanue, setvanue] = useState("");
   const [location, setlocation] = useState("");
   const [link, setlink] = useState("");
-  const id = "6788bdc7e1b3e2c7ef1b6a83";
+
   const formdata = new FormData();
   formdata.append("date", date);
   formdata.append("vanue", vanue);
@@ -24,8 +28,12 @@ const Events = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const data = await axios.post("/api/modules/additems/addEvent", formdata);
-    console.log(data);
+    AddEventItemHandler(formdata, id);
+    setdate("");
+    setvanue("");
+    setlocation("");
+    setlink("");
+    toast.name("this feature is not enabled yet")
   };
 
   return (
@@ -35,7 +43,7 @@ const Events = () => {
           <DialogTitle>Add Custom Event</DialogTitle>
 
           <div className="">
-            <form action="" onSubmit={submitHandler}>
+            <form onSubmit={submitHandler}>
               <label htmlFor="" className="text-[15px] py-2">
                 Event Date
               </label>
@@ -44,6 +52,7 @@ const Events = () => {
                 className="p-2 rounded bg-[#1d1d1d] text-gray-400 text-[15px] border-[1px] border-[#303031] w-full mb-[30px]"
                 value={date}
                 onChange={(e) => setdate(e.target.value)}
+                required
               />
 
               <label htmlFor="" className="text-[15px] py-2 my-6">
@@ -54,6 +63,7 @@ const Events = () => {
                 className="p-2 rounded bg-[#1d1d1d] text-gray-400 text-[15px] border-[1px] border-[#303031] w-full mb-[30px]"
                 value={vanue}
                 onChange={(e) => setvanue(e.target.value)}
+                required
               />
               <label htmlFor="" className="text-[15px] py-2 my-6">
                 Location
@@ -63,6 +73,7 @@ const Events = () => {
                 className="p-2 rounded bg-[#1d1d1d] text-gray-400 text-[15px] border-[1px] border-[#303031] w-full mb-[30px]"
                 value={location}
                 onChange={(e) => setlocation(e.target.value)}
+                required
               />
               <label htmlFor="" className="text-[15px] py-2 ">
                 Ticket Link
@@ -72,6 +83,7 @@ const Events = () => {
                 className="p-2 rounded bg-[#1d1d1d] text-gray-400 text-[15px] border-[1px] border-[#303031] w-full mb-[30px]"
                 value={link}
                 onChange={(e) => setlink(e.target.value)}
+                required
               />
 
               <div className="flex gap-2">
@@ -79,7 +91,7 @@ const Events = () => {
                   type="submit"
                   className="px-4 py-2 rounded-full text-black bg-yellow-500 "
                 >
-                  Done
+                  {formBtnloading ? <Loader /> : "Done"}
                 </button>
                 <DialogClose asChild>
                   <button

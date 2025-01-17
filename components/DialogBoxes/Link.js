@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   DialogContent,
   DialogHeader,
@@ -6,18 +6,21 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import FileInput from "../FileInput";
-import axios from "axios";
+import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
+import Loader from "../Loader";
 
 const Link = ({ id }) => {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [image, setimage] = useState("");
-
+  const { AddLinkItemHandler, formBtnloading } = useContext(
+    ProfileBuilderContext
+  );
   const formdata = new FormData();
   formdata.append("image", image);
   formdata.append("url", url);
   formdata.append("title", title);
-  formdata.append("id", "6787a50132ee0eedf4dcd284");
+  formdata.append("id", id);
 
   const onchangeHandler = (e) => {
     setimage(e.target.files[0]);
@@ -25,9 +28,10 @@ const Link = ({ id }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = await axios.post("/api/modules/additems/addLink", formdata);
-    console.log(data);
-    console.log(image);
+    AddLinkItemHandler(formdata, id);
+    setTitle("");
+    setUrl("");
+    setimage("");
   };
 
   return (
@@ -38,7 +42,7 @@ const Link = ({ id }) => {
 
           <form onSubmit={handleSubmit} className="flex flex-col p-10">
             <div className="flex justify-center flex-col text-center">
-              <FileInput image={image} onchange={onchangeHandler} />
+              <FileInput image={image} onchange={onchangeHandler} required />
               <h1 className="mt-10">Thumbnail Photo</h1>
               <p className="text-[14px]">
                 Use a size that’s at least 369 x 369 pixels and 6MB or less
@@ -55,6 +59,7 @@ const Link = ({ id }) => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="p-2 rounded bg-[#1d1d1d] text-gray-400 text-[15px] border-[1px] border-[#303031] w-full mb-[30px]"
+              required
             />
 
             <label htmlFor="url" className="text-[15px] py-2">
@@ -67,6 +72,7 @@ const Link = ({ id }) => {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               className="p-2 rounded bg-[#1d1d1d] text-gray-400 text-[15px] border-[1px] border-[#303031] w-full mb-[30px]"
+              required
             />
 
             <div className="flex gap-2">
@@ -74,7 +80,7 @@ const Link = ({ id }) => {
                 type="submit"
                 className="px-4 py-2 rounded-full text-black bg-yellow-500 "
               >
-                Done
+                {formBtnloading ? <Loader /> : "Done"}
               </button>
               <DialogClose asChild>
                 <button

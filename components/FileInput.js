@@ -7,6 +7,7 @@ const FileInput = ({ onchange, image }) => {
         type="file"
         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
         onChange={onchange}
+        required
       />
       {/* Show image thumbnail if an image is selected */}
       {image ? (

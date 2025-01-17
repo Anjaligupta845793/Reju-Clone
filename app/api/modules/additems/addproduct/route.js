@@ -45,6 +45,7 @@ export async function POST(request) {
     return NextResponse.json(
       {
         message: "Added successfully",
+        module,
       },
       { status: 201 }
     );
