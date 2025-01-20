@@ -9,6 +9,7 @@ export const ProfileBuilderProvider = ({ children }) => {
   const [formBtnloading, setformBtnloading] = useState(false);
   const [context, setcontext] = useState("bye from context");
   const [module, setmodule] = useState(null);
+
   const [displayNameOrLogo, setdisplayNameOrLogo] = useState(false);
   const [displayName, setdisplayName] = useState(true);
   const [displayLogo, setdisplayLogo] = useState(false);
@@ -240,13 +241,15 @@ export const ProfileBuilderProvider = ({ children }) => {
     }
   };
 
-  const itemDeleteHandler = async (moduleid, itemid) => {
+  const itemDeleteHandler = async (id, itemid) => {
     try {
-      const response = await axios.delete(`/api/modules/${moduleid}/${itemid}`);
+      const response = await axios.delete(
+        `/api/modules/${id}/itemid/${itemid}`
+      );
 
       setmodule((prevModules) =>
         prevModules.map((mod) =>
-          mod._id === moduleid
+          mod._id === id
             ? {
                 ...mod,
                 items: mod.items.filter((item) => item._id !== itemid),
@@ -254,12 +257,73 @@ export const ProfileBuilderProvider = ({ children }) => {
             : mod
         )
       );
-
+      console.log(response);
       toast.success("item deleted successfully!");
     } catch (error) {
       console.log("Error removing model:", error);
 
       toast.error("Something went wrong, try again later.");
+    }
+  };
+
+  const toggleVisibility = async (id, visible) => {
+    try {
+      const response = await axios.patch(`/api/modules/${id}`, {
+        visible: !visible,
+      });
+
+      setmodules((prevModules) =>
+        prevModules.map((mod) =>
+          mod._id === id ? { ...mod, visible: !mod.visible } : mod
+        )
+      );
+
+      toast.success("Visibility updated successfully!");
+    } catch (error) {
+      console.error("Error toggling visibility:", error);
+      toast.error("Something went wrong, try again later.");
+    }
+  };
+  const toggleItemVisibility = async (id, itemid, currentVisibility) => {
+    try {
+      const response = await axios.patch(
+        `/api/modules/${id}/itemid/${itemid}`,
+        {
+          visible: !currentVisibility,
+        }
+      );
+
+      const updatedItem = response.data.module.items.find(
+        (item) => item._id === itemid
+      );
+
+      setmodule((prevModules) =>
+        prevModules.map((mod) =>
+          mod._id === id
+            ? {
+                ...mod,
+                items: mod.items.map((item) =>
+                  item._id === itemid
+                    ? { ...item, visible: updatedItem.visible }
+                    : item
+                ),
+              }
+            : mod
+        )
+      );
+
+      toast.success("Visibility updated successfully!");
+    } catch (error) {
+      console.error("Error updating visibility:", error);
+      toast.error("Something went wrong, try again later.");
+    }
+  };
+  const fetchUser = async () => {
+    try {
+      const user = await axios.get("/api/user");
+      console.log(user);
+    } catch (error) {
+      console.log(error.response.data.message);
     }
   };
 
@@ -291,6 +355,9 @@ export const ProfileBuilderProvider = ({ children }) => {
         moduleDeleteHandler,
         formBtnloading,
         itemDeleteHandler,
+        toggleVisibility,
+        toggleItemVisibility,
+        fetchUser,
       }}
     >
       {children}

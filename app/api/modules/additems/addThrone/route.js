@@ -39,6 +39,7 @@ export async function POST(request) {
       },
       url: url,
       title: title,
+      visible: true,
     };
 
     module.items.push(itemData);

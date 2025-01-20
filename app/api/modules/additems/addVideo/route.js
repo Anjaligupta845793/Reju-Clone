@@ -14,6 +14,7 @@ export async function POST(request) {
     }
     module.items.push({
       url: url,
+      visible: true,
     });
     await module.save();
     return NextResponse.json(

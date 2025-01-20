@@ -15,7 +15,12 @@ import MusicCardProduct from "./MusicCardProduct";
 import MusicCardVideo from "./MusicCardVideo";
 
 const MusicCard = ({ item, type, id, itemid }) => {
-  const { itemDeleteHandler } = useContext(ProfileBuilderContext);
+  const { itemDeleteHandler, toggleItemVisibility } = useContext(
+    ProfileBuilderContext
+  );
+  const visibilityHandler = async (id, itemid, visible) => {
+    toggleItemVisibility(id, itemid, visible);
+  };
   const deleteColumnCard = async () => {
     itemDeleteHandler(id, itemid);
   };
@@ -49,7 +54,11 @@ const MusicCard = ({ item, type, id, itemid }) => {
       )}
 
       <div className="flex gap-2 pr-4">
-        <MdOutlineRemoveRedEye size={22} />
+        <MdOutlineRemoveRedEye
+          size={22}
+          onClick={() => visibilityHandler(id, itemid, item.visible)}
+          className="cursor-pointer"
+        />
 
         <Popover>
           <PopoverTrigger>

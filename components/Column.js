@@ -15,7 +15,13 @@ import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 const Column = ({ item, data }) => {
-  const { moduleDeleteHandler } = useContext(ProfileBuilderContext);
+  const { moduleDeleteHandler, toggleVisibility } = useContext(
+    ProfileBuilderContext
+  );
+
+  const visibilityHandler = async (id, visible) => {
+    toggleVisibility(id, visible);
+  };
   const deleteColumn = async (id) => {
     moduleDeleteHandler(id);
   };
@@ -24,7 +30,7 @@ const Column = ({ item, data }) => {
     <div
       className={`text-white
        
-       bg-[#1d1d1d] border-1  rounded-2xl border-[1px] border-solid border-[#303031]`}
+       bg-[#1d1d1d] border-1 rounded-2xl border-[1px] border-solid border-[#303031]`}
     >
       {/* Column Header */}
       <div className="flex justify-between border-b-[1px] px-4 md:py-6 py-4 items-center  border-[#303031]">
@@ -40,7 +46,11 @@ const Column = ({ item, data }) => {
           </p>
         </div>
         <div className="flex gap-2">
-          <MdOutlineRemoveRedEye size={25} />
+          <MdOutlineRemoveRedEye
+            size={25}
+            onClick={() => visibilityHandler(item._id, item.visible)}
+            className="cursor-pointer"
+          />
 
           <Popover>
             <PopoverTrigger>

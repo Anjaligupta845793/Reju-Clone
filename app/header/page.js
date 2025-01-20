@@ -7,6 +7,7 @@ import { IoTextOutline } from "react-icons/io5";
 import { HiPhoto } from "react-icons/hi2";
 import { useContext } from "react";
 import { ProfileBuilderContext } from "../Context/ContextProvider";
+import User from "@/components/UserProfile/User";
 
 const header = () => {
   const {
@@ -97,17 +98,23 @@ const header = () => {
                 <div className="flex gap-4 mt-3">
                   <div>
                     <p>Text</p>
-                    <IoTextOutline
-                      size={50}
-                      className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2"
+                    <img
+                      src="/text.svg"
+                      alt="Text Icon"
+                      width={50}
+                      height={50}
+                      className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer"
                       onClick={textOnclick}
                     />
                   </div>
                   <div>
                     <p>Logo</p>
-                    <HiPhoto
-                      size={50}
-                      className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2"
+                    <img
+                      src="/logo.svg"
+                      alt="Logo Icon"
+                      width={50}
+                      height={50}
+                      className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer"
                       onClick={logoOnClick}
                     />
                   </div>
@@ -149,7 +156,7 @@ const header = () => {
             </main>
           </div>
           <div className="lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden bg-[#1d1d1d] fixed right-10 top-30 rounded-lg pt-[180px] overflow-y-auto">
-            content
+            <User />
           </div>
         </div>
       </div>

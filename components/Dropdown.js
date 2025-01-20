@@ -1,10 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { BsFillMenuButtonWideFill } from "react-icons/bs";
-import { FaChevronUp, FaChevronDown } from "react-icons/fa";
-import { IoMdSettings } from "react-icons/io";
-import { BsFileBarGraph } from "react-icons/bs";
 
 const Dropdown = () => {
   const [isOpenFirst, setIsOpenFirst] = useState(false);
@@ -23,18 +19,19 @@ const Dropdown = () => {
 
   return (
     <>
-      <div className="text-[14px]  ">
-        <div className="bg-yellow-500  items-center text-black p-2 rounded-lg flex justify-between">
+      <div className="text-[14px]">
+        <div className="bg-yellow-500 items-center text-black p-2 rounded-lg flex justify-between">
           <div className="flex items-center gap-3">
-            <BsFillMenuButtonWideFill size={20} className="self-center" />
+            <img src="/menu.svg" alt="menu" width={20} height={20} />
             <p className="self-center">Profile Builder</p>
           </div>
           <button onClick={toggleDropdownFirst}>
-            {isOpenFirst ? (
-              <FaChevronUp size={15} className="self-center" />
-            ) : (
-              <FaChevronDown size={15} className="self-center" />
-            )}
+            <img
+              src={isOpenFirst ? "/up.svg" : "/down.svg"}
+              alt="image"
+              width={15}
+              height={15}
+            />
           </button>
         </div>
 
@@ -47,19 +44,21 @@ const Dropdown = () => {
           </div>
         )}
       </div>
+
       {/* Second */}
       <div>
-        <div className="my-5  items-center text-gray-400 p-2 hover:bg-gray-700 rounded-lg flex justify-between transition-all duration-200 ease-in">
+        <div className="my-5 items-center text-gray-400 p-2 hover:bg-gray-700 rounded-lg flex justify-between transition-all duration-200 ease-in">
           <div className="flex items-center gap-3">
-            <BsFileBarGraph size={20} className="self-center" />
-            <p className="self-center">Data Analitics</p>
+            <img src="/graph.svg" alt="graph" width={20} height={20} />
+            <p className="self-center">Data Analytics</p>
           </div>
           <button onClick={toggleDropdownSecond}>
-            {isOpenSecond ? (
-              <FaChevronUp size={15} className="self-center" />
-            ) : (
-              <FaChevronDown size={15} className="self-center" />
-            )}
+            <img
+              src={isOpenSecond ? "/up.svg" : "/down.svg"}
+              alt="image"
+              width={15}
+              height={15}
+            />
           </button>
         </div>
 
@@ -69,19 +68,26 @@ const Dropdown = () => {
           </div>
         )}
       </div>
+
       {/* Third dropdown */}
       <div>
-        <div className="text-gray-400  items-center my-5 p-2 rounded-lg hover:bg-gray-800 flex justify-between">
+        <div className="text-gray-400 items-center my-5 p-2 rounded-lg hover:bg-gray-800 flex justify-between">
           <div className="flex items-center gap-3">
-            <IoMdSettings size={20} className="self-center" />
+            <img
+              src="/setting.svg"
+              alt="Settings Icon"
+              width={20}
+              height={20}
+            />
             <p className="self-center">Settings</p>
           </div>
           <button onClick={toggleDropdownThird}>
-            {isOpenThird ? (
-              <FaChevronUp size={15} className="self-center" />
-            ) : (
-              <FaChevronDown size={15} className="self-center" />
-            )}
+            <img
+              src={isOpenThird ? "/up.svg" : "/down.svg"}
+              alt="Chevron Icon"
+              width={15}
+              height={15}
+            />
           </button>
         </div>
 

@@ -40,6 +40,7 @@ export async function POST(request) {
       title,
       currency,
       price,
+      visible:  tru,e,
     };
 
     module.items.push(itemData);

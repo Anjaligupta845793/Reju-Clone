@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }) => {
       setisAuth(false);
     }
   };
+
   return (
     <AuthContext.Provider value={{ Signup, loading, Login, isAuth }}>
       {children}

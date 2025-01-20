@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useContext, useEffect } from "react";
 import { ProfileBuilderContext } from "./Context/ContextProvider";
 import { useRouter } from "next/navigation";
+import User from "@/components/UserProfile/User";
 
 export default function Home() {
   const { module, getRequestHandler } = useContext(ProfileBuilderContext);
@@ -63,7 +64,7 @@ export default function Home() {
             </main>
           </div>
           <div className="lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden bg-[#1d1d1d] fixed right-10 top-30 rounded-lg pt-[180px] overflow-y-auto">
-            content
+            <User />
           </div>
           <div className="fixed bottom-10 md:left-[360px] left-3 ">
             <button

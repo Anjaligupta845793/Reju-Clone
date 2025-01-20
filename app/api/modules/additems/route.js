@@ -1,14 +1,14 @@
 import { Module } from "@/model/Module";
 import connectDb from "@/utills/mongodb";
 import mongoose from "mongoose";
+import { NextResponse } from "next/server";
+
 export async function POST(request) {
   try {
     await connectDb();
-    const { id,url } = await request.json();
-    
-    
-    
-    if (!id || !url ) {
+    const { id, url } = await request.json();
+
+    if (!id || !url) {
       return NextResponse.json(
         {
           message: "please provide all fields",
@@ -27,9 +27,8 @@ export async function POST(request) {
     }
     const itemData = {
       _id: new mongoose.Types.ObjectId(),
-      
+
       url: url,
-      
     };
 
     module.items.push(itemData);

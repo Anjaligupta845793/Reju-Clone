@@ -32,6 +32,10 @@ const ModuleSchema = new mongoose.Schema({
     type: [], // Array of objects (flexible structure)
     // Default to an empty array
   },
+  visible: {
+    type: Boolean,
+    default: true,
+  },
 });
 
 export const Module =

@@ -32,6 +32,7 @@ export async function POST(request) {
       vanue,
       location,
       link,
+      visible: true,
     };
 
     module.items.push(itemData);
