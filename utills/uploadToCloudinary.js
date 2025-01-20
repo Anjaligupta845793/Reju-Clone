@@ -24,3 +24,7 @@ export const uploadImage = async (file, folder) => {
       .end(bytes);
   });
 };
+
+export const deleteImage = async (id) => {
+  await cloudinary.v2.uploader.destroy(id);
+};

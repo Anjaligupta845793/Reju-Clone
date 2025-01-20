@@ -23,17 +23,21 @@ const UserSchema = new mongoose.Schema(
     coverimage: {
       url: {
         type: String,
+        default: "",
       },
       id: {
         type: String,
+        default: "",
       },
     },
     profileImage: {
       url: {
         type: String,
+        default: "",
       },
       id: {
         type: String,
+        default: "",
       },
     },
     displayNameOrLogo: {

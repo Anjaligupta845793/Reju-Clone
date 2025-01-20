@@ -7,20 +7,39 @@ import axios from "axios";
 
 export const ProfileBuilderProvider = ({ children }) => {
   const [formBtnloading, setformBtnloading] = useState(false);
-  const [context, setcontext] = useState("bye from context");
+
   const [module, setmodule] = useState(null);
 
-  const [displayNameOrLogo, setdisplayNameOrLogo] = useState(false);
-  const [displayName, setdisplayName] = useState(true);
-  const [displayLogo, setdisplayLogo] = useState(false);
-  const [light, setlight] = useState(true);
-  const [dark, setdark] = useState(false);
-  const [custom, setcustom] = useState(false);
-  const [colorTheme, setcolorTheme] = useState({
-    cardColor: "#FFFFFF",
-    backgroundcolor: "#e1e1e1",
-    TyprgraphyAndIconColor: "#121212",
-    ModuleOverlay: "Dark",
+  const [profile, setprofile] = useState({
+    name: "",
+    email: "",
+    phoneNumber: "",
+    dateOfBirth: "",
+    coverImage: { url: "", id: "" },
+    profileImage: { url: "", id: "" },
+    display: {
+      nameOrLogo: false,
+      name: true,
+      logo: false,
+      logoImage: { url: "", id: "" },
+    },
+    theme: {
+      type: "dark",
+      settings: {
+        cardColor: "",
+        backgroundColor: "",
+        typographyAndIconColor: "",
+        isImageBackground: false,
+        moduleOverlay: "",
+      },
+    },
+    socialLinks: [],
+    subscription: {
+      status: "",
+      plan: "",
+      amount: 0,
+    },
+    modules: null,
   });
 
   const [CustomCardtheme, setCustomCardtheme] = useState({
@@ -320,30 +339,48 @@ export const ProfileBuilderProvider = ({ children }) => {
   };
   const fetchUser = async () => {
     try {
-      const user = await axios.get("/api/user");
-      console.log(user);
+      const response = await axios.get("/api/user");
+
+      if (response.data) {
+        setprofile((prev) => ({
+          ...prev,
+          ...response.data.user, // Merge API response with existing structure
+        }));
+      }
     } catch (error) {
       console.log(error.response.data.message);
+    }
+  };
+  const updateProfilePic = async (image) => {
+    try {
+      const formData = new FormData();
+      console.log("image", image);
+
+      formData.append("image", image);
+      formData.append("id", profile.id); // Ensure user ID is sent
+
+      const response = await axios.post("/api/user/updateProfile", formData);
+
+      console.log("Response:", response.data);
+
+      if (response.status === 200) {
+        setprofile((prevProfile) => ({
+          ...prevProfile,
+          profileImage: response.data.user.profileImage,
+        }));
+      }
+    } catch (error) {
+      console.log("Error uploading profile picture:", error);
     }
   };
 
   return (
     <ProfileBuilderContext.Provider
       value={{
-        context,
         getRequestHandler,
         module,
         setmodule,
-        displayLogo,
-        displayName,
-        displayNameOrLogo,
-        toggleDisplayButton,
-        textOnclick,
-        logoOnClick,
-        light,
-        dark,
-        custom,
-        colorTheme,
+        updateProfilePic,
         lightThemeHandler,
         darkThemeHandler,
         customThemeHandler,
@@ -358,6 +395,7 @@ export const ProfileBuilderProvider = ({ children }) => {
         toggleVisibility,
         toggleItemVisibility,
         fetchUser,
+        profile,
       }}
     >
       {children}

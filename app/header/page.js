@@ -3,21 +3,23 @@ import FileInput from "@/components/FileInput";
 import ToggleSwitch from "@/components/ToggleSwitch";
 import Image from "next/image";
 import React from "react";
-import { IoTextOutline } from "react-icons/io5";
-import { HiPhoto } from "react-icons/hi2";
-import { useContext } from "react";
+
+import { useContext, useState } from "react";
 import { ProfileBuilderContext } from "../Context/ContextProvider";
 import User from "@/components/UserProfile/User";
 
 const header = () => {
-  const {
-    displayLogo,
-    displayName,
-    displayNameOrLogo,
-    textOnclick,
-    logoOnClick,
-    toggleDisplayButton,
-  } = useContext(ProfileBuilderContext);
+  const { profile, updateProfilePic } = useContext(ProfileBuilderContext);
+  const [image, setimage] = useState("");
+  const changeHandler = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setimage(file);
+    updateProfilePic(file);
+
+    e.target.value = "";
+  };
   return (
     <div className=" flex-1 bg-black flex flex-col">
       <div className="w-full text-black">
@@ -53,15 +55,34 @@ const header = () => {
                   <input
                     type="file"
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    onChange={changeHandler}
                   />
-                  <span className="text-yellow-400 text-2xl">
-                    <Image
-                      src="https://api.reju.pro/images/1724319927505-justb.jpeg"
-                      alt="image"
-                      width={140}
-                      height={150}
-                      className="rounded-lg"
-                    />
+                  <span className="text-center">
+                    {profile && profile.profileImage.url ? (
+                      <Image
+                        src="https://api.reju.pro/images/1724319927505-justb.jpeg"
+                        alt="image"
+                        width={140}
+                        height={150}
+                        className="rounded-lg"
+                      />
+                    ) : (
+                      <div>
+                        <img
+                          src="/plus.svg"
+                          alt="plus Icon"
+                          width={30}
+                          height={30}
+                          className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer mx-auto"
+                        />
+                        <h1 className="font-bold mt-2">
+                          Replace Profile Photo
+                        </h1>
+                        <p>
+                          Use a size a least 564 × 710 pixel and 6MB or less
+                        </p>
+                      </div>
+                    )}
                   </span>
                 </div>
               </div>
@@ -74,14 +95,30 @@ const header = () => {
                     type="file"
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                   />
-                  <span className="text-yellow-400 text-2xl ">
-                    <Image
-                      src="https://api.reju.pro/images/1730111273882-balls.png"
-                      alt="image"
-                      width={0} // Required for next/image, 0 for responsiveness
-                      height={150} // Keeps the height fixed
-                      className="w-full h-[200px] rounded-lg "
-                    />
+                  <span className="text-center">
+                    {profile && profile.coverImage.url ? (
+                      <Image
+                        src="https://api.reju.pro/images/1730111273882-balls.png"
+                        alt="image"
+                        width={140}
+                        height={150}
+                        className="rounded-lg"
+                      />
+                    ) : (
+                      <div>
+                        <img
+                          src="/plus.svg"
+                          alt="plus Icon"
+                          width={30}
+                          height={30}
+                          className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer mx-auto"
+                        />
+                        <h1 className="font-bold mt-2">Replace Cover Photo</h1>
+                        <p>
+                          Use a size a least 710 × 564 pixel and 6MB or less
+                        </p>
+                      </div>
+                    )}
                   </span>
                 </div>
               </div>
@@ -89,7 +126,7 @@ const header = () => {
               <div className=" border-[1px] rounded-lg p-3 mt-5 border-[#303031]">
                 <div className="flex justify-between">
                   <h1>Display Name or Logo</h1>
-                  <ToggleSwitch onClick={toggleDisplayButton} />
+                  <ToggleSwitch /* onClick={toggleDisplayButton}  */ />
                 </div>
                 <p>
                   You can add a display name manually or update a custom logo to
@@ -104,7 +141,7 @@ const header = () => {
                       width={50}
                       height={50}
                       className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer"
-                      onClick={textOnclick}
+                      /* onClick={textOnclick} */
                     />
                   </div>
                   <div>
@@ -115,16 +152,17 @@ const header = () => {
                       width={50}
                       height={50}
                       className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer"
-                      onClick={logoOnClick}
+                      /* onClick={logoOnClick} */
                     />
                   </div>
                 </div>
               </div>
               {/* Text Section  */}
               <div
-                className={`border-[1px] rounded-lg p-3 mt-5 border-[#303031] ${
+                className={`border-[1px] rounded-lg p-3 mt-5 border-[#303031] `}
+                /*  ${
                   displayName ? "block" : "hidden"
-                }`}
+                } */
               >
                 <h1>Text</h1>
                 <p className="mt-7">
@@ -137,9 +175,10 @@ const header = () => {
               </div>
               {/* Logo Section */}
               <div
-                className={`border-[1px] rounded-lg p-3 mt-5 border-[#303031] ${
+                className={`border-[1px] rounded-lg p-3 mt-5 border-[#303031]   `}
+                /*  ${
                   displayLogo ? "block" : "hidden"
-                }`}
+                } */
               >
                 <h1>Logo</h1>
                 <p className="mt-7">
