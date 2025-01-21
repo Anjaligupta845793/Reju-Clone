@@ -22,9 +22,9 @@ export async function POST(request) {
         { status: 404 }
       );
     }
-    if (user.profileImage.id) {
+    if (user.coverimage.id) {
       try {
-        await deleteImage(user.profileImage.id);
+        await deleteImage(user.coverimage.id);
       } catch (deleteError) {
         console.error("Failed to delete old image:", deleteError);
       }
@@ -42,8 +42,8 @@ export async function POST(request) {
 
     // Prepare item data
 
-    user.profileImage.url = imageData.secure_url;
-    user.profileImage.id = imageData.public_id;
+    user.coverimage.url = imageData.secure_url;
+    user.coverimage.id = imageData.public_id;
 
     await user.save();
 

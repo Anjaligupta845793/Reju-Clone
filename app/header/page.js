@@ -1,5 +1,5 @@
 "use client";
-import FileInput from "@/components/FileInput";
+
 import ToggleSwitch from "@/components/ToggleSwitch";
 import Image from "next/image";
 import React from "react";
@@ -9,8 +9,21 @@ import { ProfileBuilderContext } from "../Context/ContextProvider";
 import User from "@/components/UserProfile/User";
 
 const header = () => {
-  const { profile, updateProfilePic } = useContext(ProfileBuilderContext);
+  const {
+    profile,
+    setprofile,
+    updateProfilePic,
+    updateCoverPic,
+    updateText,
+    updateLogo,
+    toggleTextLogo,
+    s,
+  } = useContext(ProfileBuilderContext);
   const [image, setimage] = useState("");
+  const [coverimage, setcoverimage] = useState("");
+  const [logoimage, setlogoimage] = useState("");
+  const [text, settext] = useState("");
+
   const changeHandler = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -20,6 +33,37 @@ const header = () => {
 
     e.target.value = "";
   };
+  const changeCoverHandler = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setcoverimage(file);
+    updateCoverPic(file);
+
+    e.target.value = "";
+  };
+
+  const textchangeHandler = async (e) => {
+    e.preventDefault();
+    settext(e.target.value);
+
+    updateText(e.target.value);
+  };
+  const logochangeHandler = async (e) => {
+    setprofile((prevProfile) => ({
+      ...prevProfile,
+      displayName: false,
+      displayLogo: true,
+    }));
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setlogoimage(file);
+    updateLogo(file);
+
+    e.target.value = "";
+  };
+
   return (
     <div className=" flex-1 bg-black flex flex-col">
       <div className="w-full text-black">
@@ -60,7 +104,7 @@ const header = () => {
                   <span className="text-center">
                     {profile && profile.profileImage.url ? (
                       <Image
-                        src="https://api.reju.pro/images/1724319927505-justb.jpeg"
+                        src={profile.profileImage.url}
                         alt="image"
                         width={140}
                         height={150}
@@ -94,15 +138,15 @@ const header = () => {
                   <input
                     type="file"
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    onChange={changeCoverHandler}
                   />
-                  <span className="text-center">
-                    {profile && profile.coverImage.url ? (
+                  <span className="text-center relative w-full h-64">
+                    {profile && profile.coverimage.url ? (
                       <Image
-                        src="https://api.reju.pro/images/1730111273882-balls.png"
+                        src={profile.coverimage.url}
                         alt="image"
-                        width={140}
-                        height={150}
-                        className="rounded-lg"
+                        fill
+                        className="rounded-lg object-cover"
                       />
                     ) : (
                       <div>
@@ -126,7 +170,7 @@ const header = () => {
               <div className=" border-[1px] rounded-lg p-3 mt-5 border-[#303031]">
                 <div className="flex justify-between">
                   <h1>Display Name or Logo</h1>
-                  <ToggleSwitch /* onClick={toggleDisplayButton}  */ />
+                  <ToggleSwitch />
                 </div>
                 <p>
                   You can add a display name manually or update a custom logo to
@@ -135,34 +179,44 @@ const header = () => {
                 <div className="flex gap-4 mt-3">
                   <div>
                     <p>Text</p>
-                    <img
-                      src="/text.svg"
-                      alt="Text Icon"
-                      width={50}
-                      height={50}
-                      className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer"
-                      /* onClick={textOnclick} */
-                    />
+                    <button
+                      className="bg-transparent p-0 border-none cursor-pointer"
+                      onClick={() => toggleTextLogo("text")}
+                      disabled={profile.displayNameOrLogo ? false : true}
+                    >
+                      <img
+                        src="/text.svg"
+                        alt="Text Icon"
+                        width={50}
+                        height={50}
+                        className="text-gray-500 bg-white rounded-lg"
+                      />
+                    </button>
                   </div>
                   <div>
                     <p>Logo</p>
-                    <img
-                      src="/logo.svg"
-                      alt="Logo Icon"
-                      width={50}
-                      height={50}
-                      className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer"
-                      /* onClick={logoOnClick} */
-                    />
+
+                    <button
+                      className="bg-transparent p-0 border-none cursor-pointer"
+                      onClick={() => toggleTextLogo("logo")}
+                      disabled={profile.displayNameOrLogo ? false : true}
+                    >
+                      <img
+                        src="/logo.svg"
+                        alt="Logo Icon"
+                        width={50}
+                        height={50}
+                        className="text-gray-500 bg-white rounded-lg font-bold p-1  cursor-pointer"
+                      />
+                    </button>
                   </div>
                 </div>
               </div>
               {/* Text Section  */}
               <div
-                className={`border-[1px] rounded-lg p-3 mt-5 border-[#303031] `}
-                /*  ${
-                  displayName ? "block" : "hidden"
-                } */
+                className={`border-[1px] rounded-lg p-3 mt-5 border-[#303031]  ${
+                  profile.displayName ? "block" : "hidden"
+                }`}
               >
                 <h1>Text</h1>
                 <p className="mt-7">
@@ -171,14 +225,15 @@ const header = () => {
                 <input
                   type="text"
                   className="p-2 rounded bg-[#1d1d1d] text-gray-400 text-[15px] border-[1px] border-[#303031] w-full mb-[30px] mt-4"
+                  value={text}
+                  onChange={textchangeHandler}
                 />
               </div>
               {/* Logo Section */}
               <div
-                className={`border-[1px] rounded-lg p-3 mt-5 border-[#303031]   `}
-                /*  ${
-                  displayLogo ? "block" : "hidden"
-                } */
+                className={`border-[1px] rounded-lg p-3 mt-5 border-[#303031]  ${
+                  profile.displayLogo ? "block" : "hidden"
+                }  `}
               >
                 <h1>Logo</h1>
                 <p className="mt-7">
@@ -188,8 +243,33 @@ const header = () => {
                   <input
                     type="file"
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    onChange={logochangeHandler}
                   />
-                  <span className="text-yellow-400 text-2xl">+</span>
+                  <span className="text-center overflow-hidden block w-[140px] h-[100px] mx-auto">
+                    {profile && profile.displayLogoImage.url ? (
+                      <Image
+                        src={profile.displayLogoImage.url}
+                        alt="image"
+                        width={140}
+                        height={100}
+                        className="rounded-lg object-cover"
+                      />
+                    ) : (
+                      <div>
+                        <img
+                          src="/plus.svg"
+                          alt="plus Icon"
+                          width={30}
+                          height={30}
+                          className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer mx-auto"
+                        />
+                        <h1 className="font-bold mt-2">Replace Photo</h1>
+                        <p>
+                          Use a size at least 564 × 710 pixels and 6MB or less
+                        </p>
+                      </div>
+                    )}
+                  </span>
                 </div>
               </div>
             </main>

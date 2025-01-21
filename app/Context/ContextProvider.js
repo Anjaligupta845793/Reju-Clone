@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
-import { createContext, useState } from "react";
+import { createContext, useState, useCallback } from "react";
 import { toast } from "react-hot-toast";
+import debounce from "lodash.debounce";
 export const ProfileBuilderContext = createContext();
+
 import axios from "axios";
 
 export const ProfileBuilderProvider = ({ children }) => {
@@ -15,13 +17,15 @@ export const ProfileBuilderProvider = ({ children }) => {
     email: "",
     phoneNumber: "",
     dateOfBirth: "",
-    coverImage: { url: "", id: "" },
+    coverimage: { url: "", id: "" },
     profileImage: { url: "", id: "" },
-    display: {
-      nameOrLogo: false,
-      name: true,
-      logo: false,
-      logoImage: { url: "", id: "" },
+    displayNameOrLogo: undefined,
+    displayName: true,
+    displayLogo: false,
+    displayTitle: "",
+    displayLogoImage: {
+      url: "",
+      id: "",
     },
     theme: {
       type: "dark",
@@ -82,8 +86,23 @@ export const ProfileBuilderProvider = ({ children }) => {
     });
   };
 
-  const toggleDisplayButton = async () => {
-    setdisplayNameOrLogo(!displayNameOrLogo);
+  const toggleDisplayButton = async (displayStatus) => {
+    try {
+      const response = await axios.post("/api/user/toggleDisplayButton", {
+        displayStatus,
+      });
+
+      console.log("Response:", response.data);
+
+      if (response.status === 200) {
+        setprofile((prevProfile) => ({
+          ...prevProfile,
+          displayNameOrLogo: response.data.user.displayNameOrLogo,
+        }));
+      }
+    } catch (error) {
+      console.log("Error uploading profile picture:", error);
+    }
   };
   const textOnclick = () => {
     setdisplayName(true);
@@ -340,7 +359,7 @@ export const ProfileBuilderProvider = ({ children }) => {
   const fetchUser = async () => {
     try {
       const response = await axios.get("/api/user");
-
+      console.log(response.data.user);
       if (response.data) {
         setprofile((prev) => ({
           ...prev,
@@ -357,7 +376,7 @@ export const ProfileBuilderProvider = ({ children }) => {
       console.log("image", image);
 
       formData.append("image", image);
-      formData.append("id", profile.id); // Ensure user ID is sent
+      formData.append("id", profile.id);
 
       const response = await axios.post("/api/user/updateProfile", formData);
 
@@ -373,6 +392,93 @@ export const ProfileBuilderProvider = ({ children }) => {
       console.log("Error uploading profile picture:", error);
     }
   };
+  const updateCoverPic = async (image) => {
+    try {
+      const formData = new FormData();
+      console.log("image", image);
+
+      formData.append("image", image);
+
+      const response = await axios.post("/api/user/updateCover", formData);
+
+      console.log("Response:", response.data);
+
+      if (response.status === 200) {
+        setprofile((prevProfile) => ({
+          ...prevProfile,
+          coverimage: response.data.user.coverimage,
+        }));
+      }
+    } catch (error) {
+      console.log("Error uploading profile picture:", error);
+    }
+  };
+  const updateText = useCallback(
+    debounce(async (text) => {
+      try {
+        const response = await axios.post("/api/user/updateText", {
+          text,
+        });
+
+        console.log("Response:", response.data);
+
+        if (response.status === 200) {
+          setprofile((prevProfile) => ({
+            ...prevProfile,
+            displayName: response.data.user.displayName,
+            displayLogo: response.data.user.displayLogo,
+            displayTitle: response.data.user.displayTitle,
+          }));
+        }
+      } catch (error) {
+        console.log("Error uploading text:", error);
+      }
+    }, 1000), // Debounce time set to 1000ms (1 second)
+    []
+  );
+
+  const updateLogo = async (image) => {
+    try {
+      const formdata = new FormData();
+      formdata.append("image", image);
+      const response = await axios.post("/api/user/updateLogo", formdata);
+
+      console.log("Response:", response.data);
+
+      if (response.status === 200) {
+        setprofile((prevProfile) => ({
+          ...prevProfile,
+          displayName: response.data.user.displayName,
+          displayLogo: response.data.user.displayLogo,
+          displayLogoImage: {
+            url: response.data.user.displayLogoImage.url,
+            id: response.data.user.displayLogoImage.id,
+          },
+        }));
+      }
+    } catch (error) {
+      console.log("Error uploading profile picture:", error);
+    }
+  };
+  const toggleTextLogo = async(type) => {
+    try {
+     
+      const response = await axios.post("/api/user/toggleTextLogo", {type});
+
+      console.log("Response:", response.data);
+
+      if (response.status === 200) {
+        setprofile((prevProfile) => ({
+          ...prevProfile,
+          displayName: response.data.user.displayName,
+          displayLogo: response.data.user.displayLogo,
+         
+        }));
+      }
+    } catch (error) {
+      console.log("Error uploading profile picture:", error);
+    }
+  }
 
   return (
     <ProfileBuilderContext.Provider
@@ -396,6 +502,12 @@ export const ProfileBuilderProvider = ({ children }) => {
         toggleItemVisibility,
         fetchUser,
         profile,
+        updateCoverPic,
+        toggleDisplayButton,
+        updateText,
+        updateLogo,
+        setprofile,
+        toggleTextLogo,
       }}
     >
       {children}

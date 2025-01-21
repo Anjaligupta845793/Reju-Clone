@@ -52,6 +52,10 @@ const UserSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    displayTitle: {
+      type: String,
+      default: "",
+    },
     displayLogoImage: {
       url: {
         type: String,

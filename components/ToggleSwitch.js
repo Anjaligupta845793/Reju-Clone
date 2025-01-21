@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 
 const ToggleSwitch = () => {
+  const { profile, toggleDisplayButton } = useContext(ProfileBuilderContext);
   const [isOn, setIsOn] = useState(false);
 
-  const toggleSwitch = () => {
-    setIsOn(!isOn);
+  useEffect(() => {
+    if (profile && profile.displayNameOrLogo !== undefined) {
+      setIsOn(profile.displayNameOrLogo);
+    }
+  }, [profile]);
+
+  const toggleSwitch = async () => {
+    try {
+      const newState = !isOn;
+      await toggleDisplayButton(newState);
+      setIsOn(newState);
+    } catch (error) {
+      console.error("Error updating display state:", error);
+    }
   };
 
   return (
