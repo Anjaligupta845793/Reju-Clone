@@ -1,21 +1,20 @@
 "use client";
+import ColorPickerInput from "@/components/ColorPickerInput";
 import DisabledCard from "@/components/DisabledCard";
-import ThemeCard from "@/components/ThemeCard";
+
 import Image from "next/image";
 import React from "react";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ProfileBuilderContext } from "../Context/ContextProvider";
 
 const theme = () => {
-  const {
-    light,
-    dark,
-    custom,
-    colorTheme,
-    lightThemeHandler,
-    darkThemeHandler,
-    customThemeHandler,
-  } = useContext(ProfileBuilderContext);
+  const { updateThemeType, profile, fetchUser } = useContext(
+    ProfileBuilderContext
+  );
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
   return (
     <div className=" flex-1 bg-black flex flex-col">
       <div className="w-full text-black">
@@ -47,34 +46,41 @@ const theme = () => {
                 <h1 className="text-lg">Select your theme</h1>
                 <div className="flex gap-4 mt-3">
                   {/* Light Card */}
-                  <div>
+                  <div onClick={() => updateThemeType("light")}>
                     <h1 className="mb-2">Light</h1>
                     <div
                       className={`bg-[#1d1d1d] border-[1px] p-2 rounded-lg ${
-                        light ? " border-green-500" : "border-[#303031]"
+                        profile.themeType === "light"
+                          ? "border-green-500"
+                          : "border-[#303031]"
                       }`}
                     >
+                      {/*  */}
                       <div className="w-9 h-9 rounded-full bg-white "></div>
                     </div>
                   </div>
                   {/* Dark Card */}
-                  <div>
+                  <div onClick={() => updateThemeType("dark")}>
                     <h1 className="mb-2">Dark</h1>
                     <div
                       className={`bg-[#1d1d1d] border-[1px] p-2 rounded-lg ${
-                        dark ? " border-green-500" : "border-[#303031]"
+                        profile.themeType === "dark"
+                          ? "border-green-500"
+                          : "border-[#303031]"
                       }`}
                     >
                       <div className="w-9 h-9 rounded-full bg-black "></div>
                     </div>
                   </div>
                   {/* Custom Card */}
-                  <div>
+                  <div onClick={() => updateThemeType("custom")}>
                     <h1 className="mb-2">Custom</h1>
                     <div
                       className={`bg-[#1d1d1d] border-[1px] p-2 rounded-lg ${
-                        custom ? " border-green-500" : "border-[#303031]"
-                      }`}
+                        profile.themeType === "custom"
+                          ? "border-green-500"
+                          : "border-[#303031]"
+                      } `}
                     >
                       <Image
                         src="https://reju.pro/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ficon_custom_theme.f71f83a3.png&w=256&q=75"
@@ -87,7 +93,13 @@ const theme = () => {
                 </div>
                 {/* Theme Card */}
                 <div>
-                  <DisabledCard theme={colorTheme} />
+                  {profile && profile.themeType === "light" ? (
+                    <DisabledCard type="light" />
+                  ) : profile.themeType === "dark" ? (
+                    <DisabledCard type="dark" />
+                  ) : (
+                    <ColorPickerInput />
+                  )}
                 </div>
               </div>
             </main>

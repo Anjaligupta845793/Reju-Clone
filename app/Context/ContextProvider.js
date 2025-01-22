@@ -27,15 +27,13 @@ export const ProfileBuilderProvider = ({ children }) => {
       url: "",
       id: "",
     },
+    themeType: "dark",
     theme: {
-      type: "dark",
-      settings: {
-        cardColor: "",
-        backgroundColor: "",
-        typographyAndIconColor: "",
-        isImageBackground: false,
-        moduleOverlay: "",
-      },
+      cardColor: "",
+      backgroundColor: "",
+      TypographyAndIconColor: "",
+      isImageBackground: false,
+      moduleOverlay: "",
     },
     socialLinks: [],
     subscription: {
@@ -103,14 +101,6 @@ export const ProfileBuilderProvider = ({ children }) => {
     } catch (error) {
       console.log("Error uploading profile picture:", error);
     }
-  };
-  const textOnclick = () => {
-    setdisplayName(true);
-    setdisplayLogo(false);
-  };
-  const logoOnClick = () => {
-    setdisplayName(false);
-    setdisplayLogo(true);
   };
 
   const getRequestHandler = async () => {
@@ -460,10 +450,9 @@ export const ProfileBuilderProvider = ({ children }) => {
       console.log("Error uploading profile picture:", error);
     }
   };
-  const toggleTextLogo = async(type) => {
+  const toggleTextLogo = async (type) => {
     try {
-     
-      const response = await axios.post("/api/user/toggleTextLogo", {type});
+      const response = await axios.post("/api/user/toggleTextLogo", { type });
 
       console.log("Response:", response.data);
 
@@ -472,13 +461,54 @@ export const ProfileBuilderProvider = ({ children }) => {
           ...prevProfile,
           displayName: response.data.user.displayName,
           displayLogo: response.data.user.displayLogo,
-         
         }));
       }
     } catch (error) {
       console.log("Error uploading profile picture:", error);
     }
-  }
+  };
+  const updateThemeType = async (type) => {
+    try {
+      setprofile((prevProfile) => ({
+        ...prevProfile,
+        themeType: type,
+      }));
+      const response = await axios.post("/api/user/updateTheme", { type });
+
+      console.log("Response:", response.data);
+    } catch (error) {
+      console.log("Error uploading profile picture:", error);
+    }
+  };
+  const changeTheme = useCallback(
+    debounce(async (field, value) => {
+      try {
+        debounce(async (field, value) => {
+          try {
+            setprofile((prevProfile) => ({
+              ...prevProfile, // Corrected variable name here
+              theme: {
+                ...prevProfile.theme,
+                [field]: value,
+              },
+            }));
+          } catch (error) {
+            console.log("Error in debounced function:", error);
+          }
+        }, 500);
+
+        const response = await axios.post("/api/user/changeTheme", {
+          field,
+          value,
+        });
+
+        console.log("Response:", response.data);
+      } catch (error) {
+        console.log("Error updating theme:", error);
+      }
+    }, 500), // 500ms delay
+    []
+  );
 
   return (
     <ProfileBuilderContext.Provider
@@ -508,6 +538,8 @@ export const ProfileBuilderProvider = ({ children }) => {
         updateLogo,
         setprofile,
         toggleTextLogo,
+        updateThemeType,
+        changeTheme,
       }}
     >
       {children}
