@@ -22,6 +22,13 @@ export async function DELETE(request, { params }) {
         { status: 400 }
       );
     }
+    const module = await Module.findById(id);
+    if (!module) {
+      return NextResponse.json(
+        { message: "Module not found" },
+        { status: 404 }
+      );
+    }
     const item = module.items.find((item) => item._id.toString() === itemid);
     if (!item) throw new Error("Item not found");
 

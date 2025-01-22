@@ -1,6 +1,7 @@
 import connectDb from "@/utills/mongodb";
 import { Module } from "@/model/Module";
 import { NextResponse } from "next/server";
+import mongoose from "mongoose";
 export async function POST(request) {
   await connectDb();
   try {
@@ -13,6 +14,7 @@ export async function POST(request) {
       );
     }
     module.items.push({
+      _id: new mongoose.Types.ObjectId(),
       url: url,
       visible: true,
     });
