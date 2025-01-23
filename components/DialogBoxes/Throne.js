@@ -10,14 +10,14 @@ import axios from "axios";
 import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 import Loader from "../Loader";
 
-const Throne = ({ title }) => {
+const Throne = ({ title, router }) => {
   const [url, seturl] = useState("");
   const { AddThroneItemHandler, formBtnloading } = useContext(
     ProfileBuilderContext
   );
   const submitHandler = async (e) => {
     e.preventDefault();
-    AddThroneItemHandler(url);
+    AddThroneItemHandler(url, router);
     seturl("");
   };
   return (

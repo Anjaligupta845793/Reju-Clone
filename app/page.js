@@ -8,7 +8,9 @@ import { useRouter } from "next/navigation";
 import User from "@/components/UserProfile/User";
 
 export default function Home() {
-  const { module, getRequestHandler } = useContext(ProfileBuilderContext);
+  const { module, getRequestHandler, profile } = useContext(
+    ProfileBuilderContext
+  );
   const router = useRouter();
   console.log(module);
   useEffect(() => {
@@ -63,7 +65,14 @@ export default function Home() {
               </div>
             </main>
           </div>
-          <div className="lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden bg-[#1d1d1d] fixed right-10 top-30 rounded-lg  overflow-y-auto">
+          <div
+            className={`lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden fixed right-10 top-30 rounded-lg overflow-y-scroll text-${profile.theme.TypographyAndIconColor}`}
+            style={{
+              backgroundColor: profile.theme.cardColor,
+              maxHeight: "calc(80vh - 10px)", // Adjusted to subtract 30px for a smaller height
+              padding: "10px", // Optional, adjust based on your design
+            }}
+          >
             <User />
           </div>
           <div className="fixed bottom-10 md:left-[360px] left-3 ">

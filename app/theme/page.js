@@ -1,18 +1,20 @@
 "use client";
 import ColorPickerInput from "@/components/ColorPickerInput";
 import DisabledCard from "@/components/DisabledCard";
-
+import User from "@/components/UserProfile/User";
 import Image from "next/image";
 import React from "react";
 import { useContext, useEffect } from "react";
 import { ProfileBuilderContext } from "../Context/ContextProvider";
 
 const theme = () => {
-  const { updateThemeType, profile, fetchUser } = useContext(
+  const { updateThemeType, profile, fetchUser, getRequestHandler } = useContext(
     ProfileBuilderContext
   );
+  console.log("profile", profile);
   useEffect(() => {
     fetchUser();
+    getRequestHandler();
   }, []);
 
   return (
@@ -21,7 +23,7 @@ const theme = () => {
         {/* Sticky Header */}
         <div className="bg-[#1d1d1d] text-white md:px-10 px-2 border-b-[1px] border-solid border-[#303031] lg:sticky lg:top-0 lg:z-10">
           <div className="flex justify-between p-3">
-            <div className="pt-2 text-[18px]">Header</div>
+            <div className="pt-2 text-[18px]">Theme</div>
             <div className="flex justify-between gap-4 text-gray-200">
               <div className="pl-4 pr-28 text-[15px] rounded-lg py-1 border-[1px] border-[#303031] sm:flex hidden">
                 test.reju.pro
@@ -104,8 +106,15 @@ const theme = () => {
               </div>
             </main>
           </div>
-          <div className="lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden bg-[#1d1d1d] fixed right-10 top-30 rounded-lg pt-[180px] overflow-y-auto">
-            content
+          <div
+            className={`lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden fixed right-10 top-30 rounded-lg overflow-y-scroll text-${profile.theme.TypographyAndIconColor}`}
+            style={{
+              backgroundColor: profile.theme.cardColor,
+              maxHeight: "calc(80vh - 10px)", // Adjusted to subtract 30px for a smaller height
+              padding: "10px", // Optional, adjust based on your design
+            }}
+          >
+            <User />
           </div>
         </div>
       </div>

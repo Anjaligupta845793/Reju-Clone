@@ -194,7 +194,7 @@ export const ProfileBuilderProvider = ({ children }) => {
     }
   };
 
-  const AddThroneItemHandler = async (url) => {
+  const AddThroneItemHandler = async (url, router) => {
     setformBtnloading(true);
 
     try {
@@ -223,6 +223,7 @@ export const ProfileBuilderProvider = ({ children }) => {
 
       setformBtnloading(false);
       toast.success("Item added successfully!");
+      router.push("/");
     } catch (error) {
       console.log("Error adding Throne item:", error);
       setformBtnloading(false);
@@ -256,12 +257,13 @@ export const ProfileBuilderProvider = ({ children }) => {
   };
 
   const moduleDeleteHandler = async (id) => {
+    const toastId = toast.loading("Deleting item...");
     try {
       const response = await axios.delete(`/api/modules/${id}`);
 
       setmodule((prevmodule) => prevmodule.filter((mod) => mod._id !== id));
 
-      toast.success("module deleted successfully!");
+      toast.success("module deleted successfully!", { id: toastId });
     } catch (error) {
       console.log("Error removing model:", error);
 
@@ -270,6 +272,7 @@ export const ProfileBuilderProvider = ({ children }) => {
   };
 
   const itemDeleteHandler = async (id, itemid) => {
+    const toastId = toast.loading("Deleting item...");
     try {
       const response = await axios.delete(
         `/api/modules/${id}/itemid/${itemid}`
@@ -286,7 +289,7 @@ export const ProfileBuilderProvider = ({ children }) => {
         )
       );
       console.log(response);
-      toast.success("item deleted successfully!");
+      toast.success("item deleted successfully!", { id: toastId });
     } catch (error) {
       console.log("Error removing model:", error);
 
@@ -361,25 +364,27 @@ export const ProfileBuilderProvider = ({ children }) => {
     }
   };
   const updateProfilePic = async (image) => {
+    const toastId = toast.loading("Uploading image...");
+
     try {
       const formData = new FormData();
-      console.log("image", image);
-
       formData.append("image", image);
       formData.append("id", profile.id);
 
       const response = await axios.post("/api/user/updateProfile", formData);
-
-      console.log("Response:", response.data);
 
       if (response.status === 200) {
         setprofile((prevProfile) => ({
           ...prevProfile,
           profileImage: response.data.user.profileImage,
         }));
+        toast.success("Profile picture updated!", { id: toastId }); // Success toast
+      } else {
+        toast.error("Failed to update profile picture.", { id: toastId }); // Error toast
       }
     } catch (error) {
       console.log("Error uploading profile picture:", error);
+      toast.error("Error uploading image.", { id: toastId }); // Error toast
     }
   };
   const updateCoverPic = async (image) => {
@@ -469,33 +474,37 @@ export const ProfileBuilderProvider = ({ children }) => {
   };
   const updateThemeType = async (type) => {
     try {
-      setprofile((prevProfile) => ({
-        ...prevProfile,
-        themeType: type,
-      }));
+      const toastId = toast.loading("Updating theme...");
+
       const response = await axios.post("/api/user/updateTheme", { type });
 
-      console.log("Response:", response.data);
+      if (response.status === 200) {
+        setprofile((prevProfile) => ({
+          ...prevProfile,
+          themeType: response.data.user.themeType,
+          theme: response.data.user.theme, // Ensure correct theme updates
+        }));
+
+        toast.success("Theme updated successfully!", { id: toastId });
+      } else {
+        toast.error("Failed to update theme.", { id: toastId });
+      }
     } catch (error) {
-      console.log("Error uploading profile picture:", error);
+      console.error("Error updating theme:", error);
+      toast.error("Error updating theme.", { id: toastId });
     }
   };
+
   const changeTheme = useCallback(
     debounce(async (field, value) => {
       try {
-        debounce(async (field, value) => {
-          try {
-            setprofile((prevProfile) => ({
-              ...prevProfile, // Corrected variable name here
-              theme: {
-                ...prevProfile.theme,
-                [field]: value,
-              },
-            }));
-          } catch (error) {
-            console.log("Error in debounced function:", error);
-          }
-        }, 500);
+        setprofile((prevProfile) => ({
+          ...prevProfile,
+          theme: {
+            ...prevProfile.theme,
+            [field]: value,
+          },
+        }));
 
         const response = await axios.post("/api/user/changeTheme", {
           field,

@@ -37,6 +37,7 @@ const Page = () => {
             item={item}
             key={index}
             create={createNewModelHandler}
+            router={router}
           />
         ))}
       </div>

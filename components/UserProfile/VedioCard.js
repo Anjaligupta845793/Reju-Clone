@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
-const CardVideo = ({ item }) => {
+const CardVideo = ({ item, profile }) => {
   const [thumbnailURL, setThumbnailURL] = useState("");
   const [title, setTitle] = useState("YouTube title");
 
@@ -23,7 +23,15 @@ const CardVideo = ({ item }) => {
   }, [item.url]);
 
   return (
-    <div className={` gap-5 ${item.visible ? "flex" : "hidden"}`}>
+    <div
+      className={` gap-5 ${item.visible ? "flex" : "hidden"} text-${
+        profile.theme.TypographyAndIconColor
+      } ${
+        profile.theme.moduleOverlay === "lighten"
+          ? "bg-[#FFFFFF] bg-opacity-10"
+          : "bg-[#000000] bg-opacity-10"
+      }`}
+    >
       <div className="w-[80px] h-[80px] rounded-md overflow-hidden relative">
         <Image
           src={
@@ -37,10 +45,8 @@ const CardVideo = ({ item }) => {
       </div>
 
       <div className="flex flex-col justify-center py-4 xl:w-[350px] lg:w-[190px] md:w-[200px] sm:w-[180px] w-[140px]">
-        <h1 className="text-[15px] font-bold text-gray-300 truncate">
-          {title}
-        </h1>
-        <p className="text-[13px] text-gray-400 truncate">{item.url}</p>
+        <h1 className={`text-[15px] font-bold  truncate`}>{title}</h1>
+        <p className={`text-[13px] text-gray-400 truncate`}>{item.url}</p>
       </div>
     </div>
   );

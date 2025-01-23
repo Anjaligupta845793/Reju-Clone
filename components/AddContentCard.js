@@ -5,7 +5,7 @@ import React from "react";
 import Throne from "./DialogBoxes/Throne";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
-const AddContentCard = ({ item, create }) => {
+const AddContentCard = ({ item, create, router }) => {
   return (
     <div className="w-full">
       <div>
@@ -33,7 +33,7 @@ const AddContentCard = ({ item, create }) => {
                         </div>
                       </div>
                     </DialogTrigger>
-                    <Throne title={card.title} />
+                    <Throne title={card.title} router={router} />
                   </Dialog>
                 </div>
               );

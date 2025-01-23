@@ -17,7 +17,7 @@ const header = () => {
     updateText,
     updateLogo,
     toggleTextLogo,
-    s,
+    module,
   } = useContext(ProfileBuilderContext);
   const [image, setimage] = useState("");
   const [coverimage, setcoverimage] = useState("");
@@ -95,35 +95,35 @@ const header = () => {
               <div className=" border-[1px] rounded-lg p-3 border-[#303031]">
                 <h1 className="text-lg leading-1 mb-5 ">Profile Photo</h1>
 
-                <div className="relative w-40 h-40  border-[2px] border-dashed border-[#1d1d1d]  bg-gray flex items-center justify-center rounded-lg cursor-pointer">
+                <div className="relative w-40 h-40 border-[2px] border-dashed border-[#1d1d1d] bg-gray flex items-center justify-center rounded-lg cursor-pointer overflow-hidden">
                   <input
                     type="file"
                     className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                     onChange={changeHandler}
                   />
-                  <span className="text-center">
-                    {profile && profile.profileImage.url ? (
+                  <span className="text-center w-full h-full flex items-center justify-center">
+                    {profile && profile.profileImage?.url ? (
                       <Image
                         src={profile.profileImage.url}
-                        alt="image"
-                        width={140}
-                        height={150}
-                        className="rounded-lg"
+                        alt="Profile Image"
+                        width={160}
+                        height={160}
+                        className="rounded-lg object-cover w-full h-full"
                       />
                     ) : (
-                      <div>
+                      <div className="flex flex-col items-center justify-center">
                         <img
                           src="/plus.svg"
                           alt="plus Icon"
                           width={30}
                           height={30}
-                          className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer mx-auto"
+                          className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer"
                         />
                         <h1 className="font-bold mt-2">
                           Replace Profile Photo
                         </h1>
                         <p>
-                          Use a size a least 564 × 710 pixel and 6MB or less
+                          Use a size at least 564 × 710 pixels and 6MB or less
                         </p>
                       </div>
                     )}
@@ -274,7 +274,14 @@ const header = () => {
               </div>
             </main>
           </div>
-          <div className="lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden bg-[#1d1d1d] fixed right-10 top-30 rounded-lg pt-[180px] overflow-y-auto">
+          <div
+            className={`lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden fixed right-10 top-30 rounded-lg overflow-y-scroll text-${profile.theme.TypographyAndIconColor}`}
+            style={{
+              backgroundColor: profile.theme.cardColor,
+              maxHeight: "calc(80vh - 10px)", // Adjusted to subtract 30px for a smaller height
+              padding: "10px", // Optional, adjust based on your design
+            }}
+          >
             <User />
           </div>
         </div>

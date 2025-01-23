@@ -3,16 +3,16 @@ import React from "react";
 import Image from "next/image";
 import CardVideo from "./VedioCard";
 
-const Module = ({ module }) => {
+const Module = ({ module, profile }) => {
   return (
-    <div className="overflow-hidden p-5">
+    <div className={`overflow-hidden p-5 `}>
       {module &&
         module.map((mod, index) => (
           <div
             key={index}
             className={`mb-8 ${mod.visible ? "block" : "hidden"}`}
           >
-            <h1 className="text-xl font-bold text-white mb-4">{mod.name}</h1>
+            <h1 className={`text-xl font-bold  mb-4`}>{mod.name}</h1>
             {mod.items &&
               mod.items.length > 0 &&
               mod.items.map((item, index) => (
@@ -39,12 +39,18 @@ const Module = ({ module }) => {
                         />
                       </div>
 
-                      <div className="flex flex-col justify-center py-4 xl:w-[350px] lg:w-[190px] md:w-[200px] sm:w-[180px] w-[140px] ">
-                        <h1 className="text-[15px] font-bold text-gray-300 truncate">
+                      <div
+                        className={`flex flex-col ${
+                          profile.theme.moduleOverlay === "lighten"
+                            ? "bg-white bg-opacity-10"
+                            : "bg-black bg-opacity-10"
+                        }
+                      justify-center py-4 xl:w-[350px] lg:w-[190px] md:w-[200px] sm:w-[180px] w-[140px]`}
+                      >
+                        <h1 className="text-[15px] font-bold  truncate">
                           {item.title}
                         </h1>{" "}
                         <div className="flex gap-2">
-                          {" "}
                           <p className="text-[13px] text-white truncate">
                             {item.currency}
                           </p>
@@ -56,11 +62,15 @@ const Module = ({ module }) => {
                     </div>
                   ) : mod.type === "Youtube" || mod.type === "Tiktok" ? (
                     /* Video */
-                    <CardVideo item={item} />
+                    <CardVideo item={item} profile={profile} />
                   ) : (
                     <div
                       className={` gap-5 items-center w-full ${
                         item.visible ? "flex" : "hidden"
+                      } ${
+                        profile.theme.moduleOverlay === "lighten"
+                          ? "bg-[#FFFFFF] bg-opacity-10"
+                          : "bg-[#000000] bg-opacity-10"
                       }`}
                     >
                       {/* Image Wrapper */}
@@ -78,12 +88,10 @@ const Module = ({ module }) => {
 
                       {/* Text Content */}
                       <div className="flex flex-col justify-center py-4 xl:w-[350px] lg:w-[190px] md:w-[200px] sm:w-[180px] w-[140px] overflow-hidden">
-                        <h1 className="text-[15px] font-bold text-gray-300 truncate">
+                        <h1 className="text-[15px] font-bold truncate">
                           {item.title}
                         </h1>
-                        <p className="text-[13px] text-gray-400 truncate">
-                          {item.url}
-                        </p>
+                        <p className="text-[13px]  truncate">{item.url}</p>
                       </div>
                     </div>
                   )}

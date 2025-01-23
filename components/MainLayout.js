@@ -5,9 +5,12 @@ import Sidebar from "./Sidebar";
 import { IoMdMenu } from "react-icons/io";
 import { FaChevronDown } from "react-icons/fa";
 import MobileSidebar from "./MobileSidebar";
+import { useContext } from "react";
+import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 
 const MainLayout = ({ children }) => {
   const [toggle, settoggle] = useState(false);
+  const { profile } = useContext(ProfileBuilderContext);
 
   return (
     <div className="bg-black text-white flex h-full">
@@ -35,7 +38,15 @@ const MainLayout = ({ children }) => {
             className="border-none bg-black sm:block hidden"
           />
           <div className="flex gap-3 items-center">
-            <h1 className="bg-slate-400 p-2 w-[30px] h-[30px] rounded-full"></h1>
+            {profile.name ? (
+              <img
+                src={profile?.profileImage.url}
+                alt=""
+                className="h-10 w-10 rounded-full"
+              />
+            ) : (
+              <h1 className="bg-slate-400 p-2 w-[30px] h-[30px] rounded-full"></h1>
+            )}
             <FaChevronDown className="sm:block hidden" />
           </div>
         </div>

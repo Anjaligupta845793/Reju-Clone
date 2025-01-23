@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import React, { useState } from "react";
 
 const Dropdown = () => {
@@ -36,11 +36,19 @@ const Dropdown = () => {
         </div>
 
         {isOpenFirst && (
-          <div className="text-[15px] text-gray-400 pl-10 pt-4">
-            <p className="mt-2">Content</p>
-            <p className="mt-2">Header</p>
-            <p className="mt-2">Theme</p>
-            <p className="mt-2">Social Links</p>
+          <div className="text-[15px] text-gray-400 pl-10 pt-4 flex flex-col">
+            <Link className="mt-2" href={"/"}>
+              Content
+            </Link>
+            <Link className="mt-2" href={"/header"}>
+              Header
+            </Link>
+            <Link className="mt-2" href={"/theme"}>
+              Theme
+            </Link>
+            <Link className="mt-2" href={"/"}>
+              Setting
+            </Link>
           </div>
         )}
       </div>
