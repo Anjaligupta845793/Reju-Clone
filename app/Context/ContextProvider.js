@@ -531,6 +531,29 @@ export const ProfileBuilderProvider = ({ children }) => {
       toast.error("something went wrong ...");
     }
   };
+  const updateModuleName = useCallback(
+    debounce(async (text, id) => {
+      try {
+        const response = await axios.patch("/api/modules/updateModuleName", {
+          text,
+          id,
+        });
+
+        console.log("Response:", response.data);
+
+        if (response.status === 200) {
+          setmodule((prevModule) =>
+            prevModule.map((mod) =>
+              mod._id === id ? { ...mod, name: text } : mod
+            )
+          );
+        }
+      } catch (error) {
+        console.log("Error uploading text:", error);
+      }
+    }, 1000), // Debounce time set to 1000ms (1 second)
+    []
+  );
 
   return (
     <ProfileBuilderContext.Provider
@@ -563,6 +586,7 @@ export const ProfileBuilderProvider = ({ children }) => {
         updateThemeType,
         changeTheme,
         Logout,
+        updateModuleName,
       }}
     >
       {children}

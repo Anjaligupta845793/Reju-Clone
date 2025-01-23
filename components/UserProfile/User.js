@@ -33,9 +33,14 @@ const User = () => {
         <div>
           <ProfileBanner profile={profile} />
           <Module module={module} profile={profile} />
-          <div>
-            <h1 className="text-xl font-bold">POWERED BY REJU </h1>
-            <p>{`${profile.name}s Privacy Policy`}</p>
+          <div className="text-center">
+            <h1 className="text-[10px]">
+              POWERED BY{" "}
+              <span className="font-bold text-lg md:text-xl">REJU</span>
+            </h1>
+            <p className="text-[13px] font-bold ">
+              {`${profile.name}'s Privacy Policy`}
+            </p>
           </div>
         </div>
       ) : (

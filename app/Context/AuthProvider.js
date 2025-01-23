@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
       setloading(false);
 
       toast.success("signed up successfully!");
+      location.reload();
       setisAuth(true);
     } catch (error) {
       console.log("error while calling signup ", error);

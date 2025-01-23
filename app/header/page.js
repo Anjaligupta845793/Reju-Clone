@@ -131,41 +131,47 @@ const header = () => {
                 </div>
               </div>
               {/* Background Section */}
-              <div className=" border-[1px] rounded-lg p-3 mt-5 border-[#303031]">
-                <h1 className="text-lg leading-1 mb-5 ">Background Photo</h1>
+              <div className="border border-[#303031] rounded-lg p-3 mt-5">
+                <h1 className="text-lg leading-tight mb-5">Background Photo</h1>
 
-                <div className="relative w-full h-60  border-[1px] border-dashed border-[#1d1d1d]  bg-gray flex items-center justify-center rounded-lg cursor-pointer ">
+                <div
+                  className="relative w-full h-60 border border-dashed border-[#1d1d1d] bg-[#1d1d1d] flex items-center justify-center rounded-lg cursor-pointer"
+                  onClick={() => document.getElementById("coverUpload").click()} // Manually trigger file input click
+                >
                   <input
+                    id="coverUpload"
                     type="file"
-                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                    className="hidden" // Hide instead of opacity-0
                     onChange={changeCoverHandler}
                   />
-                  <span className="text-center relative w-full h-64">
-                    {profile && profile.coverimage.url ? (
+
+                  {profile && profile.coverimage?.url ? (
+                    <div className="relative w-full h-full">
                       <Image
                         src={profile.coverimage.url}
-                        alt="image"
+                        alt="Cover Image"
                         fill
                         className="rounded-lg object-cover"
                       />
-                    ) : (
-                      <div>
-                        <img
-                          src="/plus.svg"
-                          alt="plus Icon"
-                          width={30}
-                          height={30}
-                          className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 cursor-pointer mx-auto"
-                        />
-                        <h1 className="font-bold mt-2">Replace Cover Photo</h1>
-                        <p>
-                          Use a size a least 710 × 564 pixel and 6MB or less
-                        </p>
-                      </div>
-                    )}
-                  </span>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <img
+                        src="/plus.svg"
+                        alt="Plus Icon"
+                        width={30}
+                        height={30}
+                        className="text-gray-500 bg-white rounded-lg font-bold p-1 mt-2 mx-auto"
+                      />
+                      <h1 className="font-bold mt-2">Replace Cover Photo</h1>
+                      <p>
+                        Use a size of at least 710 × 564 pixels and 6MB or less
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
+
               {/* Display Name or Logo */}
               <div className=" border-[1px] rounded-lg p-3 mt-5 border-[#303031]">
                 <div className="flex justify-between">

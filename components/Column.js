@@ -16,9 +16,8 @@ import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 const Column = ({ item, data }) => {
-  const { moduleDeleteHandler, toggleVisibility } = useContext(
-    ProfileBuilderContext
-  );
+  const { moduleDeleteHandler, toggleVisibility, updateModuleName } =
+    useContext(ProfileBuilderContext);
   //const [visible, setvisible] = useState(true);
 
   const visibilityHandler = async (id, visible) => {
@@ -26,6 +25,10 @@ const Column = ({ item, data }) => {
   };
   const deleteColumn = async (id) => {
     moduleDeleteHandler(id);
+  };
+  const moduleNameChangeHandler = async (e) => {
+    e.preventDefault();
+    updateModuleName(e.target.value, item._id);
   };
 
   return (
@@ -39,8 +42,9 @@ const Column = ({ item, data }) => {
         <div className="flex gap-1 ">
           <input
             type="text"
-            placeholder="New Module"
+            placeholder={item.name}
             className="bg-[#1d1d1d] text-[15px] text-white w-[90px] focus:w-[200px] border-b-[1px] border-transparent focus:border-b-[#303031] outline-none  transition-all duration-300 ease-in-out"
+            onChange={moduleNameChangeHandler}
           />
 
           <p className="text-[14px] bg-[#303031] rounded-full min-w-[100px] px-4 py-1">
