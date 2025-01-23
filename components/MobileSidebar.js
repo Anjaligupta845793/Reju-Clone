@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/popover";
 
 const MobileSidebar = ({ settoggle }) => {
-  const { profile } = useContext(ProfileBuilderContext);
+  const { profile, Logout } = useContext(ProfileBuilderContext);
   return (
     <div className="p-4 w-[300px] h-screen  top-0 left-0 bg-black z-50 overflow-y-auto">
       <ImCross
@@ -53,6 +53,9 @@ const MobileSidebar = ({ settoggle }) => {
                 <div className="">
                   <h1 className="bold">{profile?.name}</h1>
                   <p className="text-[15px] ">{profile?.email}</p>
+                  <p onClick={() => Logout()} className="cursor-pointer text-red-600">
+                    Logout
+                  </p>
                 </div>
               </div>
             </div>

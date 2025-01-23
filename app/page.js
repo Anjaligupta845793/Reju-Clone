@@ -1,7 +1,7 @@
 "use client";
 import Column from "@/components/Column";
 import Image from "next/image";
-
+import Loader from "@/components/Loader";
 import { useContext, useEffect } from "react";
 import { ProfileBuilderContext } from "./Context/ContextProvider";
 import { useRouter } from "next/navigation";
@@ -47,11 +47,9 @@ export default function Home() {
               <div className="flex flex-col gap-8">
                 {!module ? (
                   <div className="flex justify-center max-w-[300px] mx-auto">
-                    {/* <Loader /> */}
-                    <p className="text-2xl font-bold">
-                      Loading… kind of like how I load up courage to talk to
-                      someone like you. 😏
-                    </p>
+                    <div className="flex justify-center items-center">
+                      <div className="w-16 h-16 rounded-full border-4 border-yellow-500 border-t-2 border-t-black animate-spin"></div>
+                    </div>
                   </div>
                 ) : module.length === 0 ? (
                   <div className="flex justify-center max-w-[300px] mx-auto">

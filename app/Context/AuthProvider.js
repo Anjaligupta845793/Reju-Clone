@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
       setloading(false);
       toast.success("logged in successfully!");
       setisAuth(true);
-      router.push("/");
+      location.reload();
     } catch (error) {
       console.log("error while calling Login ", error);
       setloading(false);

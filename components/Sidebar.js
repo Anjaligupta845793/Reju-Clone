@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/popover";
 
 const Sidebar = () => {
-  const { profile } = useContext(ProfileBuilderContext);
+  const { profile, Logout } = useContext(ProfileBuilderContext);
   return (
     <div className="p-4 w-full h-screen flex flex-col justify-between border-[1px] border-solid border-[#303031]">
       {/* Logo */}
@@ -52,6 +52,12 @@ const Sidebar = () => {
                 <div className="">
                   <h1 className="bold">{profile?.name}</h1>
                   <p className="text-[15px] ">{profile?.email}</p>
+                  <p
+                    onClick={() => Logout()}
+                    className="cursor-pointer text-red-600"
+                  >
+                    Logout
+                  </p>
                 </div>
               </div>
             </div>

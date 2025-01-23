@@ -519,6 +519,19 @@ export const ProfileBuilderProvider = ({ children }) => {
     []
   );
 
+  const Logout = async () => {
+    try {
+      const toastId = toast.loading("Loging out...");
+      const data = await axios.post("/api/logout");
+      console.log(data);
+      toast.success("loged out!", { id: toastId });
+      location.reload();
+    } catch (error) {
+      console.log(error);
+      toast.error("something went wrong ...");
+    }
+  };
+
   return (
     <ProfileBuilderContext.Provider
       value={{
@@ -549,6 +562,7 @@ export const ProfileBuilderProvider = ({ children }) => {
         toggleTextLogo,
         updateThemeType,
         changeTheme,
+        Logout,
       }}
     >
       {children}

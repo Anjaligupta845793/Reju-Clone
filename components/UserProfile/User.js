@@ -1,5 +1,5 @@
 import { ProfileBuilderContext } from "@/app/Context/ContextProvider";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import Module from "./Module";
 import ProfileBanner from "./ProfileBanner";
@@ -8,16 +8,39 @@ const User = () => {
   const { fetchUser, profile, module, getRequestHandler } = useContext(
     ProfileBuilderContext
   );
-  console.log("module ", module);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
-    fetchUser();
-    getRequestHandler();
+    const fetchData = async () => {
+      setLoading(true); // Start loading
+      await fetchUser();
+      await getRequestHandler();
+      setLoading(false); // Stop loading after fetching data
+    };
+
+    fetchData();
   }, []);
 
   return (
     <div>
-      <ProfileBanner profile={profile} />
-      <Module module={module} profile={profile} />
+      {loading ? ( // Show loader while loading
+        <div className="flex justify-center max-w-[300px] mx-auto">
+          <div className="flex justify-center items-center">
+            <div className="w-16 h-16 rounded-full border-4 border-yellow-500 border-t-2 border-t-black animate-spin"></div>
+          </div>
+        </div>
+      ) : profile ? ( // Show profile if available
+        <div>
+          <ProfileBanner profile={profile} />
+          <Module module={module} profile={profile} />
+          <div>
+            <h1 className="text-xl font-bold">POWERED BY REJU </h1>
+            <p>{`${profile.name}s Privacy Policy`}</p>
+          </div>
+        </div>
+      ) : (
+        <p className="text-center text-gray-500">No profile found</p> // Handle missing profile case
+      )}
     </div>
   );
 };
