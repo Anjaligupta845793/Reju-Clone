@@ -63,7 +63,7 @@ export default function Home() {
               </div>
             </main>
           </div>
-          <div className="lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden bg-[#1d1d1d] fixed right-10 top-30 rounded-lg pt-[180px] overflow-y-auto">
+          <div className="lg:w-[210px] 2xl:w-[360px] xl:w-[340px] md:w-[240px] md:block hidden bg-[#1d1d1d] fixed right-10 top-30 rounded-lg  overflow-y-auto">
             <User />
           </div>
           <div className="fixed bottom-10 md:left-[360px] left-3 ">

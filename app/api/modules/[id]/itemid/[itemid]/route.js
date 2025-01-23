@@ -66,7 +66,7 @@ export async function DELETE(request, { params }) {
 export async function PATCH(request, { params }) {
   try {
     await connectDb();
-    const { id, itemid } = params;
+    const { id, itemid } = await params;
     const { visible } = await request.json(); // ✅ Extract new visibility value
 
     if (!id || !itemid) {

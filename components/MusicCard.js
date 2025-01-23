@@ -3,6 +3,7 @@ import React from "react";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { RiExpandUpDownLine } from "react-icons/ri";
+import { FaEyeSlash } from "react-icons/fa6";
 
 import {
   Popover,
@@ -54,11 +55,20 @@ const MusicCard = ({ item, type, id, itemid }) => {
       )}
 
       <div className="flex gap-2 pr-4">
-        <MdOutlineRemoveRedEye
-          size={22}
-          onClick={() => visibilityHandler(id, itemid, item.visible)}
-          className="cursor-pointer"
-        />
+        {/*  */}
+        {item.visible ? (
+          <MdOutlineRemoveRedEye
+            size={22}
+            onClick={() => visibilityHandler(id, itemid, item.visible)}
+            className="cursor-pointer"
+          />
+        ) : (
+          <FaEyeSlash
+            size={22}
+            onClick={() => visibilityHandler(id, itemid, item.visible)}
+            className="cursor-pointer"
+          />
+        )}
 
         <Popover>
           <PopoverTrigger>

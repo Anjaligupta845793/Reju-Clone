@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
 import { RiExpandUpDownLine } from "react-icons/ri";
+import { FaEyeSlash } from "react-icons/fa6";
 import MusicCard from "./MusicCard";
 import DiloageForm from "./DiloageForm";
 import {
@@ -18,6 +19,7 @@ const Column = ({ item, data }) => {
   const { moduleDeleteHandler, toggleVisibility } = useContext(
     ProfileBuilderContext
   );
+  //const [visible, setvisible] = useState(true);
 
   const visibilityHandler = async (id, visible) => {
     toggleVisibility(id, visible);
@@ -46,11 +48,19 @@ const Column = ({ item, data }) => {
           </p>
         </div>
         <div className="flex gap-2">
-          <MdOutlineRemoveRedEye
-            size={25}
-            onClick={() => visibilityHandler(item._id, item.visible)}
-            className="cursor-pointer"
-          />
+          {item.visible ? (
+            <MdOutlineRemoveRedEye
+              size={25}
+              onClick={() => visibilityHandler(item._id, item.visible)}
+              className="cursor-pointer"
+            />
+          ) : (
+            <FaEyeSlash
+              size={25}
+              onClick={() => visibilityHandler(item._id, item.visible)}
+              className="cursor-pointer"
+            />
+          )}
 
           <Popover>
             <PopoverTrigger>

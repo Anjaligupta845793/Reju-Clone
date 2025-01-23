@@ -300,8 +300,8 @@ export const ProfileBuilderProvider = ({ children }) => {
         visible: !visible,
       });
 
-      setmodules((prevModules) =>
-        prevModules.map((mod) =>
+      setmodule((prevModule) =>
+        prevModule.map((mod) =>
           mod._id === id ? { ...mod, visible: !mod.visible } : mod
         )
       );
